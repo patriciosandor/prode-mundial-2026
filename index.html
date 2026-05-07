@@ -393,9 +393,11 @@ input,button{font-family:inherit;}
       <div class="admin-box">
         <h3>⚽ Resultados reales</h3>
         <p>Cargá los resultados oficiales. Una vez guardado queda <strong>bloqueado</strong>. También podés traerlos automáticamente desde internet.</p>
-        <button class="btn-calc" onclick="fetchLiveResults()" style="margin-top:0;margin-bottom:.75rem;background:var(--g5);">🌐 Traer resultados de internet</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:.75rem;">
+          <button class="btn-calc" onclick="fetchLiveResults()" style="margin-top:0;background:var(--g5);">🌐 Traer resultados de internet</button>
+          <button class="btn-calc" onclick="calcAll()" style="margin-top:0;">⚡ Recalcular puntos de todos</button>
+        </div>
         <div id="adm-results"></div>
-        <button class="btn-calc" onclick="calcAll()">⚡ Recalcular puntos de todos</button>
       </div>
 
       <div class="admin-box" id="adm-admins-box">
