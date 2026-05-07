@@ -670,34 +670,32 @@ async function doLoginExisting() {
 
   const key  = eKey(mail);
   const user = DB.users[key];
-  if (!user) { toast('Usuario no encontrado','err'); return; }
 
-  // Super admin: acepta contraseña hardcoded aunque no tenga passHash
-  const superAdminPass = 'Patricio011';
+  // Super admin: contraseña hardcoded, puede entrar aunque no esté en la DB
   if (mail === SUPER_ADMIN) {
-    if (pass !== superAdminPass) {
+    if (pass !== 'Patricio011') {
       toast('Contraseña incorrecta','err');
       document.getElementById('inp-pass-login').value = '';
       document.getElementById('inp-pass-login').focus();
       return;
     }
-    // Si no existe en la DB todavía, crearlo
+    const uk = eKey(mail);
     if (!user) {
-      const uk = eKey(mail);
+      // Primera vez: crear perfil automáticamente
       DB.users[uk] = {nombre:'Patricio',apellido:'Sandor',name:'Patricio Sandor',
-        email:mail,passHash:hashPass(pass),preds:{},pts:0,exactos:0,resultados:0,
+        email:mail,passHash:hashPass('Patricio011'),preds:{},pts:0,exactos:0,resultados:0,
         isAdmin:true,registered:Date.now()};
       await dbWrite();
-      me = mail; meData = DB.users[uk];
     } else {
-      // Actualizar passHash si no lo tiene
-      if (!user.passHash) { user.passHash = hashPass(pass); DB.users[eKey(mail)] = user; await dbWrite(); }
-      me = mail; meData = user;
+      DB.users[uk].isAdmin = true;
     }
+    me = mail; meData = DB.users[uk];
     lsSet('session', {email:mail});
     bootApp();
     return;
   }
+
+  if (!user) { toast('Usuario no encontrado','err'); return; }
 
   if (user.passHash !== hashPass(pass)) {
     toast('Contraseña incorrecta','err');
