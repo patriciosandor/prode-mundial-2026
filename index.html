@@ -83,10 +83,10 @@ input,button{font-family:inherit;}
 .sec-hd p{font-size:12px;color:var(--g4);margin-top:2px;}
 
 /* POINTS CHIPS */
-.pts-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1.25rem;}
-.pts-chip{display:flex;align-items:center;gap:5px;background:var(--wht);border:1px solid var(--g2);border-radius:999px;padding:4px 10px;}
-.pts-chip .v{font-size:15px;font-weight:700;color:var(--acc);}
-.pts-chip .l{font-size:10px;color:var(--g4);line-height:1.3;}
+.pts-chips{display:flex;flex-wrap:nowrap;gap:5px;margin-bottom:1.25rem;overflow-x:auto;padding-bottom:2px;}
+.pts-chip{display:flex;align-items:center;gap:4px;background:var(--wht);border:1px solid var(--g2);border-radius:999px;padding:3px 8px;white-space:nowrap;flex-shrink:0;}
+.pts-chip .v{font-size:13px;font-weight:700;color:var(--acc);}
+.pts-chip .l{font-size:10px;color:var(--g4);line-height:1.2;}
 
 /* PROGRESS */
 .prog{margin-bottom:1.25rem;}
@@ -323,10 +323,10 @@ input,button{font-family:inherit;}
     <div id="tab-grp">
       <div class="sec-hd"><div><h2>Fase de Grupos</h2><p>Completá el marcador de cada partido</p></div></div>
       <div class="pts-chips">
-        <div class="pts-chip"><span class="v">8</span><div class="l">Marcador<br>exacto</div></div>
-        <div class="pts-chip"><span class="v">6</span><div class="l">±1 gol<br>c/equipo</div></div>
-        <div class="pts-chip"><span class="v">5</span><div class="l">±2 goles<br>c/equipo</div></div>
-        <div class="pts-chip"><span class="v">3</span><div class="l">Resultado<br>correcto</div></div>
+        <div class="pts-chip"><span class="v">8</span><div class="l">Exacto</div></div>
+        <div class="pts-chip"><span class="v">6</span><div class="l">±1 gol</div></div>
+        <div class="pts-chip"><span class="v">5</span><div class="l">±2 goles</div></div>
+        <div class="pts-chip"><span class="v">3</span><div class="l">Resultado</div></div>
         <div class="pts-chip"><span class="v">0</span><div class="l">Incorrecto</div></div>
       </div>
       <div class="prog">
@@ -477,20 +477,27 @@ input,button{font-family:inherit;}
 // ═══════════════════════════════════════════════
 const SUPER_ADMIN = 'patriciosandor@gmail.com';
 
-const FLAGS = {
-  'México':'🇲🇽','EE.UU.':'🇺🇸','Canadá':'🇨🇦','Honduras':'🇭🇳',
-  'Argentina':'🇦🇷','Chile':'🇨🇱','Perú':'🇵🇪','Bolivia':'🇧🇴',
-  'Brasil':'🇧🇷','Colombia':'🇨🇴','Venezuela':'🇻🇪','Ecuador':'🇪🇨',
-  'España':'🇪🇸','Portugal':'🇵🇹','Marruecos':'🇲🇦','Camerún':'🇨🇲',
-  'Francia':'🇫🇷','Bélgica':'🇧🇪','Países Bajos':'🇳🇱','Alemania':'🇩🇪',
-  'Inglaterra':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Italia':'🇮🇹','Croacia':'🇭🇷','Eslovaquia':'🇸🇰',
-  'Japón':'🇯🇵','Corea del Sur':'🇰🇷','Arabia Saudita':'🇸🇦','Australia':'🇦🇺',
-  'Senegal':'🇸🇳','Egipto':'🇪🇬','Nigeria':'🇳🇬','Ghana':'🇬🇭',
-  'Uruguay':'🇺🇾','Paraguay':'🇵🇾','Costa Rica':'🇨🇷','Panamá':'🇵🇦',
-  'Serbia':'🇷🇸','Polonia':'🇵🇱','Ucrania':'🇺🇦','Hungría':'🇭🇺',
-  'Turquía':'🇹🇷','Irán':'🇮🇷','Irak':'🇮🇶','Qatar':'🇶🇦',
-  'Costa de Marfil':'🇨🇮','Argelia':'🇩🇿','Malí':'🇲🇱','Tanzania':'🇹🇿'
+// Códigos ISO 3166-1 alpha-2 para flagcdn.com
+const FLAG_CODES = {
+  'México':'mx','EE.UU.':'us','Canadá':'ca','Honduras':'hn',
+  'Argentina':'ar','Chile':'cl','Perú':'pe','Bolivia':'bo',
+  'Brasil':'br','Colombia':'co','Venezuela':'ve','Ecuador':'ec',
+  'España':'es','Portugal':'pt','Marruecos':'ma','Camerún':'cm',
+  'Francia':'fr','Bélgica':'be','Países Bajos':'nl','Alemania':'de',
+  'Inglaterra':'gb-eng','Italia':'it','Croacia':'hr','Eslovaquia':'sk',
+  'Japón':'jp','Corea del Sur':'kr','Arabia Saudita':'sa','Australia':'au',
+  'Senegal':'sn','Egipto':'eg','Nigeria':'ng','Ghana':'gh',
+  'Uruguay':'uy','Paraguay':'py','Costa Rica':'cr','Panamá':'pa',
+  'Serbia':'rs','Polonia':'pl','Ucrania':'ua','Hungría':'hu',
+  'Turquía':'tr','Irán':'ir','Irak':'iq','Qatar':'qa',
+  'Costa de Marfil':'ci','Argelia':'dz','Malí':'ml','Tanzania':'tz'
 };
+
+function FLAGS(team) {
+  const code = FLAG_CODES[team];
+  if (!code) return '<span style="font-size:14px;">🏳</span>';
+  return `<img src="https://flagcdn.com/20x15/${code}.png" width="20" height="15" alt="${team}" style="border-radius:2px;vertical-align:middle;flex-shrink:0;">`;
+}
 
 const GROUPS = {
   A:['México','EE.UU.','Canadá','Honduras'],
@@ -848,9 +855,8 @@ function renderGroups() {
       const scored = rr&&rr.h!==''&&rr.a!==''&&ph!==''&&pa!=='';
       const r  = scored ? calcPts(ph,pa,rr.h,rr.a) : null;
       const tag = r&&r.tag ? `<span class="ptag ${TAG_CLS[r.tag]}">${TAG_LBL[r.tag]}</span>` : '';
-      const f0=FLAGS[m[0]]||'🏳', f1=FLAGS[m[1]]||'🏳';
       html += `<div class="mrow">
-        <span class="mteam"><span>${f0}</span>${m[0]}</span>
+        <span class="mteam">${FLAGS(m[0])}${m[0]}</span>
         <div class="swrap">
           <input class="sin" type="number" min="0" max="30" value="${ph}" placeholder="–"
             oninput="onInp('${k}_h',this.value)" onfocus="this.select()">
@@ -858,7 +864,7 @@ function renderGroups() {
           <input class="sin" type="number" min="0" max="30" value="${pa}" placeholder="–"
             oninput="onInp('${k}_a',this.value)" onfocus="this.select()">
         </div>
-        <span class="mteam r"><span>${f1}</span>${m[1]}</span>
+        <span class="mteam r">${FLAGS(m[1])}${m[1]}</span>
         ${tag}
       </div>`;
     });
@@ -1088,13 +1094,12 @@ function renderAdminResults() {
     ms.forEach((m,mi)=>{
       const k=`g${g}_${mi}`,rr=DB.results[k]||{h:'',a:''};
       const locked=rr.h!==''&&rr.a!=='';
-      const f0=FLAGS[m[0]]||'🏳',f1=FLAGS[m[1]]||'🏳';
-      html+=`<div class="arow"><span class="ateam">${f0} ${m[0]}</span>
+      html+=`<div class="arow"><span class="ateam">${FLAGS(m[0])} ${m[0]}</span>
         ${locked?`<span style="font-size:13px;font-weight:700;color:var(--ok);padding:0 6px;">${rr.h}:${rr.a} 🔒</span>`
           :`<input class="rin" type="number" min="0" max="30" placeholder="–" oninput="onRes('${k}','h',this.value)">
            <span style="color:var(--g3);font-weight:700;">:</span>
            <input class="rin" type="number" min="0" max="30" placeholder="–" oninput="onRes('${k}','a',this.value)">`}
-        <span class="ateam" style="text-align:right;">${f1} ${m[1]}</span></div>`;
+        <span class="ateam" style="text-align:right;">${FLAGS(m[1])} ${m[1]}</span></div>`;
     });
   }
   html+='<div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--g4);margin:12px 0 7px;">Eliminación Directa</div>';
