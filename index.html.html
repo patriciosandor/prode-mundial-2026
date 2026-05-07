@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prode Mundial 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Graphik:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#A100FF; --acc2:#7500BF; --acc-dim:rgba(161,0,255,.09);
+  --blk:#000; --wht:#fff;
+  --g1:#F7F7F7; --g2:#E8E8E8; --g3:#C0C0C0; --g4:#767676; --g5:#3A3A3A;
+  --txt:#1A1A1A;
+  --ok:#00B86B; --err:#E53935; --gold:#F5A623;
+  --r:4px; --r2:8px;
+  --sh:0 1px 6px rgba(0,0,0,.07);
+  --sh2:0 4px 20px rgba(161,0,255,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Graphik','Helvetica Neue',Arial,sans-serif;background:var(--g1);color:var(--txt);min-height:100vh;font-size:14px;}
+input,button{font-family:inherit;}
+
+/* TOPBAR */
+.topbar{background:var(--blk);height:52px;padding:0 1.25rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.brand{display:flex;align-items:center;gap:9px;}
+.diamond{width:24px;height:24px;background:var(--acc);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);flex-shrink:0;}
+.brand-txt{color:#fff;font-size:14px;font-weight:600;}
+.brand-txt b{color:var(--acc);}
+.user-chip{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:4px 12px 4px 4px;}
+.uav{width:26px;height:26px;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;}
+.uname{font-size:12px;color:rgba(255,255,255,.85);font-weight:500;}
+.btn-out{background:none;border:1px solid rgba(255,255,255,.15);border-radius:var(--r);padding:5px 10px;color:rgba(255,255,255,.5);font-size:11px;cursor:pointer;transition:.15s;}
+.btn-out:hover{color:#fff;border-color:rgba(255,255,255,.4);}
+
+/* MAIN */
+.main{max-width:960px;margin:0 auto;padding:1.5rem 1rem 6rem;}
+
+/* LOGIN CARD */
+.login-wrap{max-width:400px;margin:3rem auto;}
+.login-card{background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:2rem;box-shadow:var(--sh2);}
+.login-top{text-align:center;margin-bottom:1.5rem;}
+.login-diamond{width:44px;height:44px;background:var(--acc);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);margin:0 auto .75rem;}
+.login-top h1{font-size:19px;font-weight:600;}
+.login-top p{font-size:12px;color:var(--g4);margin-top:3px;}
+
+/* STEPS */
+.step{display:none;}
+.step.active{display:block;}
+.step-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--acc);margin-bottom:1rem;display:flex;align-items:center;gap:8px;}
+.step-label::after{content:'';flex:1;height:1px;background:var(--g2);}
+
+/* FIELDS */
+.field{margin-bottom:.85rem;}
+.field label{display:block;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--g4);margin-bottom:5px;}
+.field input{width:100%;padding:10px 12px;border:1.5px solid var(--g2);border-radius:var(--r);font-size:14px;color:var(--txt);background:var(--wht);outline:none;transition:.2s;}
+.field input:focus{border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-dim);}
+.field input.error{border-color:var(--err);}
+.field-hint{font-size:11px;color:var(--g4);margin-top:4px;}
+.field-hint.err{color:var(--err);}
+
+/* BUTTONS */
+.btn-acc{width:100%;padding:11px;background:var(--acc);color:#fff;border:none;border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;transition:.15s;}
+.btn-acc:hover{background:var(--acc2);}
+.btn-acc:disabled{opacity:.5;cursor:not-allowed;}
+.btn-link{background:none;border:none;color:var(--acc);font-size:12px;cursor:pointer;padding:0;text-decoration:underline;}
+
+.notice{margin-top:.75rem;padding:8px 12px;background:var(--acc-dim);border-left:3px solid var(--acc);font-size:11px;color:var(--acc2);line-height:1.6;border-radius:0 var(--r) var(--r) 0;}
+
+/* SPINNER */
+.spinner-wrap{text-align:center;padding:2.5rem;color:var(--g4);font-size:13px;}
+.spinner{width:26px;height:26px;border:3px solid var(--g2);border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto .75rem;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* TABS */
+.tabs{display:flex;background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);overflow:hidden;margin-bottom:1.25rem;box-shadow:var(--sh);}
+.tab-btn{flex:1;padding:12px 6px;background:none;border:none;border-bottom:2.5px solid transparent;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--g4);cursor:pointer;transition:.15s;}
+.tab-btn:hover{color:var(--txt);background:var(--g1);}
+.tab-btn.active{color:var(--acc);border-bottom-color:var(--acc);background:var(--acc-dim);}
+
+/* SEC HEADER */
+.sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem;}
+.sec-hd h2{font-size:17px;font-weight:600;}
+.sec-hd p{font-size:12px;color:var(--g4);margin-top:2px;}
+
+/* POINTS CHIPS */
+.pts-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1.25rem;}
+.pts-chip{display:flex;align-items:center;gap:5px;background:var(--wht);border:1px solid var(--g2);border-radius:999px;padding:4px 10px;}
+.pts-chip .v{font-size:15px;font-weight:700;color:var(--acc);}
+.pts-chip .l{font-size:10px;color:var(--g4);line-height:1.3;}
+
+/* PROGRESS */
+.prog{margin-bottom:1.25rem;}
+.prog-lbl{display:flex;justify-content:space-between;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--g4);margin-bottom:4px;}
+.prog-bar{height:3px;background:var(--g2);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--acc);border-radius:2px;transition:width .4s;}
+
+/* GROUPS */
+.grp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;}
+.grp-card{background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);overflow:hidden;box-shadow:var(--sh);}
+.grp-head{background:var(--blk);padding:8px 12px;display:flex;align-items:center;gap:8px;}
+.grp-letter{font-size:15px;font-weight:700;color:var(--acc);}
+.grp-sub{font-size:10px;color:rgba(255,255,255,.4);font-weight:600;letter-spacing:.5px;text-transform:uppercase;}
+.grp-body{padding:6px 8px;}
+.mrow{display:flex;align-items:center;gap:4px;padding:6px 5px;border-radius:var(--r);margin-bottom:3px;background:var(--g1);}
+.mrow:last-child{margin-bottom:0;}
+.mteam{flex:1;font-size:11px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:3px;}
+.mteam.r{justify-content:flex-end;flex-direction:row-reverse;}
+.swrap{display:flex;align-items:center;gap:2px;flex-shrink:0;}
+.sin{width:34px;height:30px;text-align:center;border:1.5px solid var(--g2);border-radius:var(--r);font-size:14px;font-weight:700;color:var(--txt);background:var(--wht);outline:none;-moz-appearance:textfield;transition:.2s;}
+.sin::-webkit-inner-spin-button,.sin::-webkit-outer-spin-button{-webkit-appearance:none;}
+.sin:focus{border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-dim);}
+.sdot-score{font-size:11px;color:var(--g3);font-weight:700;}
+.ptag{font-size:9px;padding:1px 5px;border-radius:999px;font-weight:700;flex-shrink:0;white-space:nowrap;}
+.t-exact{background:#FFF3CD;color:#856404;}
+.t-n1{background:#D4EDDA;color:#155724;}
+.t-n2{background:#D1ECF1;color:#0c5460;}
+.t-res{background:var(--acc-dim);color:var(--acc2);}
+.t-miss{background:#F8D7DA;color:#721c24;}
+
+/* ELIM */
+.rnd-block{margin-bottom:1.75rem;}
+.rnd-hd{display:flex;align-items:center;gap:10px;margin-bottom:.7rem;}
+.rnd-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--g4);}
+.rnd-badge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:999px;text-transform:uppercase;}
+.rb-open{background:rgba(161,0,255,.1);color:var(--acc);border:1px solid rgba(161,0,255,.2);}
+.rb-lock{background:var(--g2);color:var(--g4);}
+.rnd-line{flex:1;height:1px;background:var(--g2);}
+.erow{display:flex;align-items:center;gap:8px;background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:10px 12px;margin-bottom:7px;box-shadow:var(--sh);}
+.eteam{flex:1;padding:7px 9px;border:1.5px solid var(--g2);border-radius:var(--r);font-size:12px;font-weight:500;outline:none;transition:.2s;color:var(--txt);}
+.eteam:focus{border-color:var(--acc);}
+.eteam[readonly]{background:var(--g1);color:var(--g4);}
+
+/* RANKING */
+.rank-card{background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);overflow:hidden;box-shadow:var(--sh);}
+.rank-thead{background:var(--blk);padding:10px 14px;display:grid;grid-template-columns:40px 1fr 60px 60px 70px;gap:8px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.rank-row{display:grid;grid-template-columns:40px 1fr 60px 60px 70px;gap:8px;align-items:center;padding:11px 14px;border-bottom:1px solid var(--g2);transition:.1s;}
+.rank-row:last-child{border-bottom:none;}
+.rank-row:hover{background:var(--g1);}
+.rank-row.me{background:var(--acc-dim);border-left:3px solid var(--acc);}
+.rpos{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.r1{background:var(--gold);color:#000;}.r2{background:var(--g2);color:var(--g5);}
+.r3{background:#F2C9A0;color:#6B3800;}.rn{background:var(--g1);color:var(--g4);border:1px solid var(--g2);}
+.rname{font-weight:600;font-size:13px;}.remail{font-size:10px;color:var(--g4);margin-top:1px;}
+.rpts{font-size:18px;font-weight:700;color:var(--acc);text-align:right;}
+.rgold{font-size:12px;font-weight:700;text-align:right;color:var(--gold);}
+.rsub{font-size:12px;font-weight:600;text-align:right;color:var(--g5);}
+.admin-tag{background:var(--acc-dim);color:var(--acc);border:1px solid rgba(161,0,255,.2);font-size:9px;font-weight:700;padding:1px 5px;border-radius:999px;margin-left:4px;}
+
+/* ADMIN */
+.admin-box{background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:1.25rem;margin-bottom:1rem;box-shadow:var(--sh);}
+.admin-box h3{font-size:13px;font-weight:700;margin-bottom:4px;}
+.admin-box>p{font-size:11px;color:var(--g4);margin-bottom:1rem;line-height:1.6;}
+.user-tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.user-tbl th{text-align:left;padding:7px 9px;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--g4);border-bottom:1px solid var(--g2);}
+.user-tbl td{padding:8px 9px;border-bottom:1px solid var(--g2);vertical-align:middle;}
+.user-tbl tr:last-child td{border-bottom:none;}
+.arow{display:flex;align-items:center;gap:7px;padding:7px 9px;background:var(--g1);border-radius:var(--r);margin-bottom:5px;}
+.ateam{flex:1;font-size:11px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.rin{width:34px;height:28px;text-align:center;border:1.5px solid var(--g2);border-radius:var(--r);font-size:13px;font-weight:700;color:var(--acc);background:var(--wht);outline:none;-moz-appearance:textfield;}
+.rin::-webkit-inner-spin-button,.rin::-webkit-outer-spin-button{-webkit-appearance:none;}
+.rin:focus{border-color:var(--acc);}
+.btn-calc{background:var(--acc);color:#fff;border:none;border-radius:var(--r);padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;transition:.15s;margin-top:.75rem;}
+.btn-calc:hover{background:var(--acc2);}
+.btn-sm{padding:5px 10px;font-size:11px;font-weight:700;border-radius:var(--r);border:none;cursor:pointer;transition:.15s;}
+.btn-del{background:rgba(229,57,53,.1);color:var(--err);}
+.btn-del:hover{background:rgba(229,57,53,.2);}
+.btn-edit{background:var(--acc-dim);color:var(--acc);}
+.btn-edit:hover{background:rgba(161,0,255,.16);}
+.btn-ok{background:rgba(0,184,107,.12);color:var(--ok);}
+.add-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--g2);}
+.add-row input{flex:1;min-width:120px;padding:8px 10px;border:1.5px solid var(--g2);border-radius:var(--r);font-size:13px;outline:none;}
+.add-row input:focus{border-color:var(--acc);}
+.share-url-box{background:var(--g1);border:1px solid var(--g2);border-radius:var(--r);padding:9px 12px;font-size:12px;font-family:monospace;word-break:break-all;color:var(--g5);margin-bottom:.5rem;}
+
+/* SAVE BAR */
+.savebar{position:fixed;bottom:0;left:0;right:0;background:var(--wht);border-top:1px solid var(--g2);padding:10px 1.5rem;display:flex;align-items:center;justify-content:space-between;z-index:100;box-shadow:0 -2px 12px rgba(0,0,0,.06);}
+.save-st{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--g4);}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--g3);flex-shrink:0;}
+.sdot.ok{background:var(--ok);}
+.sdot.dirty{background:var(--gold);animation:pulse 1.2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.btn-sv{background:var(--acc);color:#fff;border:none;border-radius:var(--r);padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;transition:.15s;}
+.btn-sv:hover{background:var(--acc2);}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;display:flex;align-items:center;justify-content:center;}
+.modal{background:var(--wht);border-radius:var(--r2);padding:1.75rem;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.2);}
+.modal h3{font-size:16px;font-weight:700;margin-bottom:8px;}
+.modal p{font-size:13px;color:var(--g4);margin-bottom:1.25rem;line-height:1.6;}
+.modal-btns{display:flex;gap:8px;}
+.modal-btns button{flex:1;padding:10px;border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;border:none;}
+.btn-confirm{background:var(--err);color:#fff;}
+.btn-cancel{background:var(--g1);color:var(--txt);border:1px solid var(--g2)!important;}
+.setup-modal{max-width:460px;}
+.setup-step{background:var(--g1);border:1px solid var(--g2);border-radius:var(--r2);padding:1rem;margin-bottom:.75rem;}
+.setup-step h4{font-size:12px;font-weight:700;color:var(--acc);margin-bottom:5px;}
+.setup-step p{font-size:11px;color:var(--g5);line-height:1.7;}
+.setup-step code{background:rgba(161,0,255,.08);color:var(--acc2);padding:1px 5px;border-radius:3px;font-size:10px;}
+.btn-full{width:100%;padding:11px;background:var(--acc);color:#fff;border:none;border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;margin-top:.5rem;transition:.15s;}
+.btn-full:hover{background:var(--acc2);}
+.btn-full.grey{background:var(--g2);color:var(--g5);margin-top:6px;}
+.btn-full.grey:hover{background:var(--g3);}
+
+/* TOAST */
+.toast{position:fixed;bottom:72px;left:50%;transform:translateX(-50%) translateY(16px);opacity:0;background:var(--blk);color:#fff;border-radius:var(--r2);padding:10px 18px;font-size:13px;font-weight:500;transition:all .22s;z-index:500;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.ok{background:var(--ok);}
+.toast.err{background:var(--err);}
+
+.footer{text-align:center;padding:1.5rem 0 .5rem;font-size:10px;color:var(--g3);}
+.footer span{color:var(--acc);font-weight:700;}
+
+@media(max-width:540px){
+  .rank-thead,.rank-row{grid-template-columns:32px 1fr 46px 46px 52px;gap:4px;padding:9px 10px;font-size:10px;}
+  .grp-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="diamond"></div>
+    <span class="brand-txt">Accenture <b>Prode 2026</b></span>
+  </div>
+  <div id="topbar-user" style="display:none;flex-direction:row;align-items:center;gap:8px;">
+    <div class="user-chip">
+      <div class="uav" id="tb-av">?</div>
+      <span class="uname" id="tb-nm">-</span>
+      <span id="tb-crown" style="display:none;font-size:13px;margin-left:2px;">👑</span>
+    </div>
+    <button class="btn-out" onclick="doLogout()">Salir</button>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ══ LOGIN ══════════════════════════════════ -->
+  <div id="v-login">
+    <div class="login-wrap">
+      <div class="login-card">
+        <div class="login-top">
+          <div class="login-diamond"></div>
+          <h1>Prode Mundial 2026</h1>
+          <p id="login-subtitle">Ingresá tu mail para continuar</p>
+        </div>
+
+        <div id="login-spinner" class="spinner-wrap" style="display:none;">
+          <div class="spinner"></div>Cargando…
+        </div>
+
+        <!-- STEP 1: ingreso de mail -->
+        <div id="step-mail" class="step active">
+          <div class="field">
+            <label>Mail</label>
+            <input type="email" id="inp-mail" placeholder="tu@mail.com" autocomplete="email"
+              onkeydown="if(event.key==='Enter') checkMail()">
+          </div>
+          <button class="btn-acc" onclick="checkMail()">Continuar</button>
+        </div>
+
+        <!-- STEP 2a: usuario existente → contraseña -->
+        <div id="step-login" class="step">
+          <div class="step-label">Bienvenido de nuevo</div>
+          <p style="font-size:13px;color:var(--g4);margin-bottom:1rem;">
+            <span id="login-user-name" style="font-weight:600;color:var(--txt);"></span>
+          </p>
+          <div class="field">
+            <label>Contraseña</label>
+            <input type="password" id="inp-pass-login" placeholder="••••••••"
+              onkeydown="if(event.key==='Enter') doLoginExisting()">
+          </div>
+          <button class="btn-acc" onclick="doLoginExisting()">Entrar</button>
+          <div style="text-align:center;margin-top:.75rem;">
+            <button class="btn-link" onclick="goBackToMail()">← Usar otro mail</button>
+          </div>
+        </div>
+
+        <!-- STEP 2b: usuario nuevo → registro completo -->
+        <div id="step-register" class="step">
+          <div class="step-label">Primer ingreso</div>
+          <div class="field">
+            <label>Nombre</label>
+            <input type="text" id="inp-nombre" placeholder="Tu nombre" autocomplete="given-name">
+          </div>
+          <div class="field">
+            <label>Apellido</label>
+            <input type="text" id="inp-apellido" placeholder="Tu apellido" autocomplete="family-name">
+          </div>
+          <div class="field">
+            <label>Contraseña</label>
+            <input type="password" id="inp-pass1" placeholder="Elegí una contraseña"
+              oninput="validatePassMatch()">
+          </div>
+          <div class="field">
+            <label>Repetir contraseña</label>
+            <input type="password" id="inp-pass2" placeholder="Repetí la contraseña"
+              oninput="validatePassMatch()" onkeydown="if(event.key==='Enter') doRegister()">
+            <div class="field-hint err" id="pass-match-hint" style="display:none;">Las contraseñas no coinciden</div>
+          </div>
+          <button class="btn-acc" id="btn-register" onclick="doRegister()">Registrarme</button>
+          <div class="notice">Tu mail queda registrado de forma permanente. La próxima vez entrás solo con mail y contraseña.</div>
+          <div style="text-align:center;margin-top:.75rem;">
+            <button class="btn-link" onclick="goBackToMail()">← Usar otro mail</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ APP ════════════════════════════════════ -->
+  <div id="v-app" style="display:none;">
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tbtn-grp" onclick="showTab('grp')">Grupos</button>
+      <button class="tab-btn" id="tbtn-eli" onclick="showTab('eli')">Eliminación</button>
+      <button class="tab-btn" id="tbtn-rnk" onclick="showTab('rnk')">Ranking</button>
+      <button class="tab-btn" id="tbtn-adm" onclick="showTab('adm')" style="display:none;">Admin ⚙</button>
+    </div>
+
+    <!-- GRUPOS -->
+    <div id="tab-grp">
+      <div class="sec-hd"><div><h2>Fase de Grupos</h2><p>Completá el marcador de cada partido</p></div></div>
+      <div class="pts-chips">
+        <div class="pts-chip"><span class="v">8</span><div class="l">Marcador<br>exacto</div></div>
+        <div class="pts-chip"><span class="v">6</span><div class="l">±1 gol<br>c/equipo</div></div>
+        <div class="pts-chip"><span class="v">5</span><div class="l">±2 goles<br>c/equipo</div></div>
+        <div class="pts-chip"><span class="v">3</span><div class="l">Resultado<br>correcto</div></div>
+        <div class="pts-chip"><span class="v">0</span><div class="l">Incorrecto</div></div>
+      </div>
+      <div class="prog">
+        <div class="prog-lbl"><span>Progreso</span><span id="prog-txt">0 / 48</span></div>
+        <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+      </div>
+      <div class="grp-grid" id="grps"></div>
+    </div>
+
+    <!-- ELIMINACION -->
+    <div id="tab-eli" style="display:none;">
+      <div class="sec-hd"><div><h2>Eliminación Directa</h2><p>Las rondas se habilitan cuando el admin las abre</p></div></div>
+      <div class="pts-chips">
+        <div class="pts-chip"><span class="v">8</span><div class="l">Exacto</div></div>
+        <div class="pts-chip"><span class="v">6</span><div class="l">±1 gol</div></div>
+        <div class="pts-chip"><span class="v">5</span><div class="l">±2 goles</div></div>
+        <div class="pts-chip"><span class="v">3</span><div class="l">Resultado</div></div>
+      </div>
+      <div id="eli-cont"></div>
+    </div>
+
+    <!-- RANKING -->
+    <div id="tab-rnk" style="display:none;">
+      <div class="sec-hd">
+        <div><h2>Ranking General</h2><p>Puntaje acumulado de todos</p></div>
+        <button class="btn-sv" style="font-size:12px;padding:8px 16px;" onclick="loadAndRender()">↻ Actualizar</button>
+      </div>
+      <div class="rank-card">
+        <div class="rank-thead">
+          <div>#</div><div>Jugador</div>
+          <div style="text-align:right;">Pts</div>
+          <div style="text-align:right;">Exactos</div>
+          <div style="text-align:right;">Result.</div>
+        </div>
+        <div id="rnk-body"></div>
+      </div>
+    </div>
+
+    <!-- ADMIN (solo patricio + admins que él elija) -->
+    <div id="tab-adm" style="display:none;">
+
+      <div class="admin-box">
+        <h3>👥 Participantes</h3>
+        <p>Agregá, editá o eliminá participantes. El mail no se puede cambiar una vez registrado.</p>
+        <table class="user-tbl">
+          <thead><tr><th>Nombre</th><th>Mail</th><th>Rol</th><th>Acciones</th></tr></thead>
+          <tbody id="adm-tbody"></tbody>
+        </table>
+        <div class="add-row">
+          <input type="text"  id="new-nombre"   placeholder="Nombre">
+          <input type="text"  id="new-apellido" placeholder="Apellido">
+          <input type="email" id="new-mail"     placeholder="Mail">
+          <input type="password" id="new-pass"  placeholder="Contraseña" style="min-width:110px;">
+          <button class="btn-acc" style="padding:8px 14px;font-size:12px;width:auto;" onclick="adminAddUser()">+ Agregar</button>
+        </div>
+      </div>
+
+      <div class="admin-box">
+        <h3>🔓 Rondas de eliminación</h3>
+        <p>Abrí cada ronda cuando empiece. Los jugadores solo editan rondas abiertas.</p>
+        <div id="adm-rounds"></div>
+      </div>
+
+      <div class="admin-box">
+        <h3>⚽ Resultados reales</h3>
+        <p>Cargá los resultados oficiales. Una vez guardado queda <strong>bloqueado</strong>.</p>
+        <div id="adm-results"></div>
+        <button class="btn-calc" onclick="calcAll()">⚡ Recalcular puntos de todos</button>
+      </div>
+
+      <div class="admin-box" id="adm-admins-box">
+        <h3>👑 Permisos de administrador</h3>
+        <p>Solo vos (patriciosandor@gmail.com) podés otorgar o quitar acceso al panel admin.</p>
+        <div id="adm-admins"></div>
+      </div>
+
+      <div class="admin-box">
+        <h3>🔗 Link para compartir</h3>
+        <p>Mandá este link a tus compañeros para que se registren.</p>
+        <div class="share-url-box" id="share-url">—</div>
+        <button class="btn-sv" onclick="copyLink()">Copiar link</button>
+        <p style="margin-top:.75rem;font-size:11px;color:var(--g4);">
+          💡 Subí el archivo a <a href="https://app.netlify.com/drop" target="_blank" style="color:var(--acc);">Netlify Drop</a> para tener un link permanente gratis.
+        </p>
+      </div>
+
+      <div class="admin-box">
+        <h3>⚙ Configuración JSONBin</h3>
+        <p>Datos compartidos en tiempo real para que todos vean el mismo ranking.</p>
+        <button class="btn-calc" onclick="showSetup()" style="margin-top:0;">Ver instrucciones</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">⚽ Powered by <span>Accenture</span> · Mundial 2026</div>
+</div>
+
+<!-- SAVE BAR -->
+<div class="savebar" id="savebar" style="display:none;">
+  <div class="save-st"><div class="sdot" id="sdot"></div><span id="stxt">Guardado</span></div>
+  <button class="btn-sv" onclick="savePreds()">Guardar predicciones</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- MODAL CONFIRMAR -->
+<div class="modal-bg" id="modal-confirm" style="display:none;" onclick="if(event.target===this)this.style.display='none'">
+  <div class="modal">
+    <h3 id="mc-title">Confirmar</h3>
+    <p id="mc-msg">¿Estás seguro?</p>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="document.getElementById('modal-confirm').style.display='none'">Cancelar</button>
+      <button class="btn-confirm" id="mc-ok">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL SETUP JSONBIN -->
+<div class="modal-bg" id="modal-setup" style="display:none;" onclick="if(event.target===this)this.style.display='none'">
+  <div class="modal setup-modal" style="max-height:90vh;overflow-y:auto;">
+    <h3 style="margin-bottom:1rem;">⚙ Configurar JSONBin</h3>
+    <div class="setup-step">
+      <h4>PASO 1 — Crear cuenta gratis</h4>
+      <p>Entrá a <strong>jsonbin.io</strong> y creá una cuenta gratuita.</p>
+    </div>
+    <div class="setup-step">
+      <h4>PASO 2 — Crear un Bin</h4>
+      <p>Click en <strong>"Create Bin"</strong> → pegá: <code>{"users":{},"results":{},"open":{}}</code> → copiá el <strong>Bin ID</strong></p>
+    </div>
+    <div class="setup-step">
+      <h4>PASO 3 — API Key</h4>
+      <p>Perfil → <strong>API Keys</strong> → creá una clave nueva y copiala.</p>
+    </div>
+    <div class="setup-step">
+      <h4>PASO 4 — Pegá los datos acá</h4>
+      <div class="field" style="margin-top:.5rem;"><label>Bin ID</label><input type="text" id="cfg-binid" placeholder="6xxxxxxxxxxxxxxxxxxxxxx"></div>
+      <div class="field"><label>API Key</label><input type="text" id="cfg-apikey" placeholder="$2a$10$xxxxxx..."></div>
+    </div>
+    <button class="btn-full" onclick="saveSetup()">Guardar y conectar</button>
+    <button class="btn-full grey" onclick="document.getElementById('modal-setup').style.display='none'">Cerrar</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  CONSTANTES
+// ═══════════════════════════════════════════════
+const SUPER_ADMIN = 'patriciosandor@gmail.com';
+
+const FLAGS = {
+  'México':'🇲🇽','EE.UU.':'🇺🇸','Canadá':'🇨🇦','Honduras':'🇭🇳',
+  'Argentina':'🇦🇷','Chile':'🇨🇱','Perú':'🇵🇪','Bolivia':'🇧🇴',
+  'Brasil':'🇧🇷','Colombia':'🇨🇴','Venezuela':'🇻🇪','Ecuador':'🇪🇨',
+  'España':'🇪🇸','Portugal':'🇵🇹','Marruecos':'🇲🇦','Camerún':'🇨🇲',
+  'Francia':'🇫🇷','Bélgica':'🇧🇪','Países Bajos':'🇳🇱','Alemania':'🇩🇪',
+  'Inglaterra':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Italia':'🇮🇹','Croacia':'🇭🇷','Eslovaquia':'🇸🇰',
+  'Japón':'🇯🇵','Corea del Sur':'🇰🇷','Arabia Saudita':'🇸🇦','Australia':'🇦🇺',
+  'Senegal':'🇸🇳','Egipto':'🇪🇬','Nigeria':'🇳🇬','Ghana':'🇬🇭',
+  'Uruguay':'🇺🇾','Paraguay':'🇵🇾','Costa Rica':'🇨🇷','Panamá':'🇵🇦',
+  'Serbia':'🇷🇸','Polonia':'🇵🇱','Ucrania':'🇺🇦','Hungría':'🇭🇺',
+  'Turquía':'🇹🇷','Irán':'🇮🇷','Irak':'🇮🇶','Qatar':'🇶🇦',
+  'Costa de Marfil':'🇨🇮','Argelia':'🇩🇿','Malí':'🇲🇱','Tanzania':'🇹🇿'
+};
+
+const GROUPS = {
+  A:['México','EE.UU.','Canadá','Honduras'],
+  B:['Argentina','Chile','Perú','Bolivia'],
+  C:['Brasil','Colombia','Venezuela','Ecuador'],
+  D:['España','Portugal','Marruecos','Camerún'],
+  E:['Francia','Bélgica','Países Bajos','Alemania'],
+  F:['Inglaterra','Italia','Croacia','Eslovaquia'],
+  G:['Japón','Corea del Sur','Arabia Saudita','Australia'],
+  H:['Senegal','Egipto','Nigeria','Ghana'],
+  I:['Uruguay','Paraguay','Costa Rica','Panamá'],
+  J:['Serbia','Polonia','Ucrania','Hungría'],
+  K:['Turquía','Irán','Irak','Qatar'],
+  L:['Costa de Marfil','Argelia','Malí','Tanzania']
+};
+
+const ROUNDS = [
+  {id:'oct',name:'Octavos de Final',n:8},
+  {id:'cua',name:'Cuartos de Final',n:4},
+  {id:'sem',name:'Semifinal',n:2},
+  {id:'ter',name:'Tercer Puesto',n:1},
+  {id:'fin',name:'Final',n:1}
+];
+
+// ═══════════════════════════════════════════════
+//  STORAGE & DB
+// ═══════════════════════════════════════════════
+const lsGet = k => { try { return JSON.parse(localStorage.getItem('p26_'+k)); } catch(e) { return null; } };
+const lsSet = (k,v) => { try { localStorage.setItem('p26_'+k, JSON.stringify(v)); } catch(e) {} };
+
+let DB = { users:{}, results:{}, open:{} };
+let BIN_ID  = lsGet('binid')  || '';
+let API_KEY = lsGet('apikey') || '';
+
+const binUrl = () => `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+
+async function dbRead() {
+  if (!BIN_ID || !API_KEY) return false;
+  try {
+    const r = await fetch(binUrl(), { headers:{'X-Master-Key':API_KEY} });
+    if (!r.ok) return false;
+    const j = await r.json();
+    DB = j.record || {users:{},results:{},open:{}};
+    return true;
+  } catch(e) { return false; }
+}
+
+async function dbWrite() {
+  lsSet('db', DB);
+  if (!BIN_ID || !API_KEY) return false;
+  try {
+    const r = await fetch(binUrl(), {
+      method:'PUT',
+      headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},
+      body: JSON.stringify(DB)
+    });
+    return r.ok;
+  } catch(e) { return false; }
+}
+
+// ═══════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════
+let me     = null;
+let meData = null;
+let dirty  = false;
+const pendingResults = {};
+
+// ═══════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════
+function eKey(email) {
+  return email.toLowerCase().replace(/\./g,'_').replace(/@/g,'__');
+}
+
+// Simple hash (non-cryptographic, enough for a prode)
+function hashPass(pass) {
+  let h = 0;
+  for (let i = 0; i < pass.length; i++) {
+    h = (Math.imul(31, h) + pass.charCodeAt(i)) | 0;
+  }
+  return h.toString(36);
+}
+
+function isSuperAdmin() {
+  return me === SUPER_ADMIN;
+}
+function isAdmin() {
+  return meData && meData.isAdmin;
+}
+
+// ═══════════════════════════════════════════════
+//  LOGIN FLOW — 3 pasos
+// ═══════════════════════════════════════════════
+function showStep(id) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-'+id).classList.add('active');
+}
+
+function setLoginLoading(on) {
+  document.getElementById('login-spinner').style.display = on ? '' : 'none';
+  document.querySelectorAll('.step').forEach(s => { if(on) s.style.visibility='hidden'; else s.style.visibility=''; });
+  if (!on) {
+    document.querySelectorAll('.step').forEach(s => s.style.visibility='');
+  }
+}
+
+async function checkMail() {
+  const mail = document.getElementById('inp-mail').value.trim().toLowerCase();
+  if (!mail || !mail.includes('@')) { toast('Ingresá un mail válido','err'); return; }
+
+  setLoginLoading(true);
+
+  // Load DB
+  const connected = await dbRead();
+  if (!connected) {
+    const saved = lsGet('db');
+    if (saved) DB = saved;
+  }
+
+  setLoginLoading(false);
+  document.querySelectorAll('.step').forEach(s => s.style.visibility='');
+
+  const key  = eKey(mail);
+  const user = DB.users[key];
+
+  if (user) {
+    // Usuario existente → pedir contraseña
+    document.getElementById('login-user-name').textContent = user.name || user.email;
+    document.getElementById('login-subtitle').textContent  = 'Ingresá tu contraseña';
+    document.getElementById('inp-pass-login').value = '';
+    showStep('login');
+    setTimeout(() => document.getElementById('inp-pass-login').focus(), 50);
+  } else if (mail === SUPER_ADMIN) {
+    // Super admin primer ingreso: contraseña hardcoded, no necesita registro
+    document.getElementById('login-user-name').textContent = 'Patricio Sandor';
+    document.getElementById('login-subtitle').textContent  = 'Ingresá tu contraseña';
+    document.getElementById('inp-pass-login').value = '';
+    showStep('login');
+    setTimeout(() => document.getElementById('inp-pass-login').focus(), 50);
+  } else {
+    // Usuario nuevo → registro
+    document.getElementById('login-subtitle').textContent = 'Creá tu cuenta';
+    document.getElementById('inp-nombre').value  = '';
+    document.getElementById('inp-apellido').value = '';
+    document.getElementById('inp-pass1').value   = '';
+    document.getElementById('inp-pass2').value   = '';
+    document.getElementById('pass-match-hint').style.display = 'none';
+    showStep('register');
+    setTimeout(() => document.getElementById('inp-nombre').focus(), 50);
+  }
+}
+
+function goBackToMail() {
+  document.getElementById('login-subtitle').textContent = 'Ingresá tu mail para continuar';
+  showStep('mail');
+  setTimeout(() => document.getElementById('inp-mail').focus(), 50);
+}
+
+function validatePassMatch() {
+  const p1 = document.getElementById('inp-pass1').value;
+  const p2 = document.getElementById('inp-pass2').value;
+  const hint = document.getElementById('pass-match-hint');
+  if (p2.length > 0 && p1 !== p2) {
+    hint.style.display = '';
+    document.getElementById('inp-pass2').classList.add('error');
+  } else {
+    hint.style.display = 'none';
+    document.getElementById('inp-pass2').classList.remove('error');
+  }
+}
+
+async function doLoginExisting() {
+  const mail = document.getElementById('inp-mail').value.trim().toLowerCase();
+  const pass = document.getElementById('inp-pass-login').value;
+  if (!pass) { toast('Ingresá tu contraseña','err'); return; }
+
+  const key  = eKey(mail);
+  const user = DB.users[key];
+  if (!user) { toast('Usuario no encontrado','err'); return; }
+
+  // Super admin: acepta contraseña hardcoded aunque no tenga passHash
+  const superAdminPass = 'Patricio011';
+  if (mail === SUPER_ADMIN) {
+    if (pass !== superAdminPass) {
+      toast('Contraseña incorrecta','err');
+      document.getElementById('inp-pass-login').value = '';
+      document.getElementById('inp-pass-login').focus();
+      return;
+    }
+    // Si no existe en la DB todavía, crearlo
+    if (!user) {
+      const uk = eKey(mail);
+      DB.users[uk] = {nombre:'Patricio',apellido:'Sandor',name:'Patricio Sandor',
+        email:mail,passHash:hashPass(pass),preds:{},pts:0,exactos:0,resultados:0,
+        isAdmin:true,registered:Date.now()};
+      await dbWrite();
+      me = mail; meData = DB.users[uk];
+    } else {
+      // Actualizar passHash si no lo tiene
+      if (!user.passHash) { user.passHash = hashPass(pass); DB.users[eKey(mail)] = user; await dbWrite(); }
+      me = mail; meData = user;
+    }
+    lsSet('session', {email:mail});
+    bootApp();
+    return;
+  }
+
+  if (user.passHash !== hashPass(pass)) {
+    toast('Contraseña incorrecta','err');
+    document.getElementById('inp-pass-login').value = '';
+    document.getElementById('inp-pass-login').focus();
+    return;
+  }
+
+  me = mail; meData = user;
+  lsSet('session', {email:mail});
+  bootApp();
+}
+
+async function doRegister() {
+  const mail     = document.getElementById('inp-mail').value.trim().toLowerCase();
+  const nombre   = document.getElementById('inp-nombre').value.trim();
+  const apellido = document.getElementById('inp-apellido').value.trim();
+  const pass1    = document.getElementById('inp-pass1').value;
+  const pass2    = document.getElementById('inp-pass2').value;
+
+  if (!nombre)   { toast('Ingresá tu nombre','err');    return; }
+  if (!apellido) { toast('Ingresá tu apellido','err');  return; }
+  if (!pass1)    { toast('Elegí una contraseña','err'); return; }
+  if (pass1 !== pass2) { toast('Las contraseñas no coinciden','err'); return; }
+  if (pass1.length < 4) { toast('La contraseña debe tener al menos 4 caracteres','err'); return; }
+
+  const key = eKey(mail);
+  // Double-check: mail no puede repetirse
+  if (DB.users[key]) { toast('Ese mail ya está registrado','err'); return; }
+
+  const user = {
+    nombre, apellido,
+    name: `${nombre} ${apellido}`,
+    email: mail,
+    passHash: hashPass(pass1),
+    preds: {},
+    pts: 0, exactos: 0, resultados: 0,
+    isAdmin: mail === SUPER_ADMIN,
+    registered: Date.now()
+  };
+
+  DB.users[key] = user;
+  await dbWrite();
+  toast('¡Bienvenido al prode! 🎉','ok');
+
+  me = mail; meData = user;
+  lsSet('session', {email:mail});
+  bootApp();
+}
+
+function doLogout() {
+  lsSet('session', null);
+  me = null; meData = null; dirty = false;
+  document.getElementById('v-login').style.display = '';
+  document.getElementById('v-app').style.display   = 'none';
+  document.getElementById('savebar').style.display = 'none';
+  document.getElementById('topbar-user').style.display = 'none';
+  document.getElementById('login-subtitle').textContent = 'Ingresá tu mail para continuar';
+  document.getElementById('inp-mail').value = '';
+  showStep('mail');
+}
+
+// ═══════════════════════════════════════════════
+//  BOOT
+// ═══════════════════════════════════════════════
+function bootApp() {
+  document.getElementById('v-login').style.display = 'none';
+  document.getElementById('v-app').style.display   = '';
+  document.getElementById('savebar').style.display = '';
+
+  const tu = document.getElementById('topbar-user');
+  tu.style.display = 'flex';
+  document.getElementById('tb-av').textContent = meData.name[0].toUpperCase();
+  document.getElementById('tb-nm').textContent = meData.name;
+  document.getElementById('tb-crown').style.display = isAdmin() ? '' : 'none';
+
+  // Tab admin: solo si es admin
+  document.getElementById('tbtn-adm').style.display = isAdmin() ? '' : 'none';
+
+  // El botón de "Permisos de admin" solo lo ve el super admin
+  document.getElementById('adm-admins-box').style.display = isSuperAdmin() ? '' : 'none';
+
+  document.getElementById('share-url').textContent = window.location.href;
+  renderGroups();
+  renderElim();
+  renderRanking();
+  if (isAdmin()) renderAdmin();
+  setSave(true);
+}
+
+async function loadAndRender() {
+  const ok = await dbRead();
+  if (ok) {
+    const key = eKey(me);
+    if (DB.users[key]) meData = DB.users[key];
+  }
+  renderGroups(); renderElim(); renderRanking();
+  if (isAdmin()) renderAdmin();
+}
+
+// ═══════════════════════════════════════════════
+//  TABS
+// ═══════════════════════════════════════════════
+function showTab(id) {
+  ['grp','eli','rnk','adm'].forEach(t => {
+    document.getElementById('tab-'+t).style.display = t===id ? '' : 'none';
+    const b = document.getElementById('tbtn-'+t);
+    if (b) b.classList.toggle('active', t===id);
+  });
+  if (id==='rnk') loadAndRender();
+  if (id==='adm') renderAdmin();
+}
+
+// ═══════════════════════════════════════════════
+//  PUNTOS
+// ═══════════════════════════════════════════════
+const getRes = (h,a) => { const n=parseInt(h),m=parseInt(a); if(isNaN(n)||isNaN(m)) return null; return n>m?'H':n<m?'A':'D'; };
+
+function calcPts(ph,pa,rh,ra) {
+  const x = v => (v==null||v==='') ? null : parseInt(v);
+  const [phn,pan,rhn,ran] = [x(ph),x(pa),x(rh),x(ra)];
+  if ([phn,pan,rhn,ran].some(v => v==null||isNaN(v))) return {pts:0,tag:''};
+  if (phn===rhn && pan===ran) return {pts:8,tag:'exact'};
+  const pr=getRes(ph,pa), rr=getRes(rh,ra);
+  if (!pr||!rr) return {pts:0,tag:''};
+  const dh=Math.abs(phn-rhn), da=Math.abs(pan-ran);
+  if (dh<=1&&da<=1) return {pts:6,tag:'n1'};
+  if (dh<=2&&da<=2) return {pts:5,tag:'n2'};
+  if (pr===rr) return {pts:3,tag:'res'};
+  return {pts:0,tag:'miss'};
+}
+
+const TAG_LBL = {exact:'⭐+8',n1:'≈±1 +6',n2:'≈±2 +5',res:'✓+3',miss:'✗0'};
+const TAG_CLS = {exact:'t-exact',n1:'t-n1',n2:'t-n2',res:'t-res',miss:'t-miss'};
+
+// ═══════════════════════════════════════════════
+//  RENDER GRUPOS
+// ═══════════════════════════════════════════════
+function renderGroups() {
+  const preds = (meData&&meData.preds) ? meData.preds : {};
+  let html = '';
+  for (const [g,teams] of Object.entries(GROUPS)) {
+    const ms = [];
+    for (let i=0;i<teams.length;i++) for (let j=i+1;j<teams.length;j++) ms.push([teams[i],teams[j]]);
+    html += `<div class="grp-card"><div class="grp-head"><span class="grp-letter">G${g}</span><span class="grp-sub">Grupo ${g}</span></div><div class="grp-body">`;
+    ms.forEach((m,mi) => {
+      const k  = `g${g}_${mi}`;
+      const ph = preds[k+'_h']??'', pa = preds[k+'_a']??'';
+      const rr = DB.results[k];
+      const scored = rr&&rr.h!==''&&rr.a!==''&&ph!==''&&pa!=='';
+      const r  = scored ? calcPts(ph,pa,rr.h,rr.a) : null;
+      const tag = r&&r.tag ? `<span class="ptag ${TAG_CLS[r.tag]}">${TAG_LBL[r.tag]}</span>` : '';
+      const f0=FLAGS[m[0]]||'🏳', f1=FLAGS[m[1]]||'🏳';
+      html += `<div class="mrow">
+        <span class="mteam"><span>${f0}</span>${m[0]}</span>
+        <div class="swrap">
+          <input class="sin" type="number" min="0" max="30" value="${ph}" placeholder="–"
+            oninput="onInp('${k}_h',this.value)" onfocus="this.select()">
+          <span class="sdot-score">:</span>
+          <input class="sin" type="number" min="0" max="30" value="${pa}" placeholder="–"
+            oninput="onInp('${k}_a',this.value)" onfocus="this.select()">
+        </div>
+        <span class="mteam r"><span>${f1}</span>${m[1]}</span>
+        ${tag}
+      </div>`;
+    });
+    html += '</div></div>';
+  }
+  document.getElementById('grps').innerHTML = html;
+  updateProg();
+}
+
+function updateProg() {
+  const p = (meData&&meData.preds) ? meData.preds : {};
+  let f=0;
+  for (const [g,teams] of Object.entries(GROUPS)) {
+    const n=teams.length*(teams.length-1)/2;
+    for (let i=0;i<n;i++) { const k=`g${g}_${i}`; if((p[k+'_h']??'')!==''&&(p[k+'_a']??'')!=='') f++; }
+  }
+  document.getElementById('prog-fill').style.width = (f/48*100)+'%';
+  document.getElementById('prog-txt').textContent  = `${f} / 48`;
+}
+
+// ═══════════════════════════════════════════════
+//  RENDER ELIM
+// ═══════════════════════════════════════════════
+function renderElim() {
+  const preds = (meData&&meData.preds) ? meData.preds : {};
+  let html='', idx=0;
+  for (const rnd of ROUNDS) {
+    const isOpen = DB.open[rnd.id];
+    html += `<div class="rnd-block"><div class="rnd-hd">
+      <span class="rnd-title">${rnd.name}</span>
+      <span class="rnd-badge ${isOpen?'rb-open':'rb-lock'}">${isOpen?'Abierto':'Bloqueado 🔒'}</span>
+      <div class="rnd-line"></div></div>`;
+    for (let m=0;m<rnd.n;m++) {
+      const k  = `e${idx}`;
+      const ph=preds[k+'_h']??'', pa=preds[k+'_a']??'';
+      const th=preds[k+'_th']??'', ta=preds[k+'_ta']??'';
+      const rr=DB.results[k];
+      const scored=rr&&rr.h!==''&&rr.a!==''&&ph!==''&&pa!=='';
+      const r=scored?calcPts(ph,pa,rr.h,rr.a):null;
+      const tag=r&&r.tag?`<span class="ptag ${TAG_CLS[r.tag]}">${TAG_LBL[r.tag]}</span>`:'';
+      const ro=isOpen?'':'readonly';
+      html += `<div class="erow">
+        <input class="eteam" type="text" value="${th}" placeholder="Equipo local" ${ro} oninput="onInp('${k}_th',this.value)">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;">
+          <div class="swrap">
+            <input class="sin" type="number" min="0" max="30" value="${ph}" placeholder="–" ${ro} oninput="onInp('${k}_h',this.value)" onfocus="this.select()">
+            <span class="sdot-score">:</span>
+            <input class="sin" type="number" min="0" max="30" value="${pa}" placeholder="–" ${ro} oninput="onInp('${k}_a',this.value)" onfocus="this.select()">
+          </div>${tag}
+        </div>
+        <input class="eteam" type="text" value="${ta}" placeholder="Equipo visitante" ${ro} style="text-align:right;" oninput="onInp('${k}_ta',this.value)">
+      </div>`;
+      idx++;
+    }
+    html += '</div>';
+  }
+  document.getElementById('eli-cont').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════
+//  RANKING
+// ═══════════════════════════════════════════════
+function renderRanking() {
+  const list = Object.values(DB.users).sort((a,b)=>(b.pts||0)-(a.pts||0));
+  const body = document.getElementById('rnk-body');
+  if (!list.length) { body.innerHTML='<div style="padding:2rem;text-align:center;color:var(--g3);font-size:13px;">Aún no hay participantes</div>'; return; }
+  body.innerHTML = list.map((u,i) => {
+    const pc=i===0?'r1':i===1?'r2':i===2?'r3':'rn';
+    const isMe=u.email===me;
+    return `<div class="rank-row${isMe?' me':''}">
+      <div><span class="rpos ${pc}">${i+1}</span></div>
+      <div>
+        <div class="rname">${u.name||u.email}${u.isAdmin?'<span class="admin-tag">Admin</span>':''}${isMe?' <span style="font-size:10px;color:var(--acc);font-weight:700;"> (vos)</span>':''}</div>
+        <div class="remail">${u.email}</div>
+      </div>
+      <div class="rpts">${u.pts||0}</div>
+      <div class="rgold">${u.exactos||0}</div>
+      <div class="rsub">${u.resultados||0}</div>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════
+//  INPUT / SAVE
+// ═══════════════════════════════════════════════
+function onInp(key, val) {
+  if (!meData.preds) meData.preds = {};
+  meData.preds[key] = val;
+  DB.users[eKey(me)] = meData;
+  dirty = true;
+  setSave(false);
+  updateProg();
+}
+
+async function savePreds() {
+  DB.users[eKey(me)] = meData;
+  const ok = await dbWrite();
+  dirty = false;
+  setSave(true);
+  toast(ok ? 'Guardado y sincronizado ✓' : 'Guardado localmente ✓','ok');
+}
+
+function setSave(ok) {
+  document.getElementById('sdot').className    = 'sdot'+(ok?' ok':' dirty');
+  document.getElementById('stxt').textContent  = ok ? 'Guardado' : 'Cambios sin guardar';
+}
+
+window.addEventListener('beforeunload', () => { if(dirty&&me) { DB.users[eKey(me)]=meData; lsSet('db',DB); } });
+setInterval(() => { if(dirty&&me) savePreds(); }, 20000);
+
+// ═══════════════════════════════════════════════
+//  ADMIN
+// ═══════════════════════════════════════════════
+function renderAdmin() {
+  renderAdminUsers();
+  renderAdminRounds();
+  renderAdminResults();
+  if (isSuperAdmin()) renderAdminAdmins();
+}
+
+// ── Usuarios ─────────────────────────────────
+function renderAdminUsers() {
+  const users = Object.values(DB.users);
+  const tbody = document.getElementById('adm-tbody');
+  if (!users.length) { tbody.innerHTML='<tr><td colspan="4" style="padding:1rem;color:var(--g4);">Sin participantes aún</td></tr>'; return; }
+  tbody.innerHTML = users.map(u => {
+    const uk = eKey(u.email);
+    const isPrimary = u.email === SUPER_ADMIN;
+    return `<tr id="urow-${uk}">
+      <td style="font-size:13px;font-weight:500;">${u.name||u.email}${u.isAdmin?'<span class="admin-tag">Admin</span>':''}</td>
+      <td style="font-size:11px;color:var(--g4);">${u.email}</td>
+      <td style="font-size:11px;">${u.isAdmin?'Admin':'Jugador'}</td>
+      <td style="display:flex;gap:4px;flex-wrap:wrap;">
+        <button class="btn-sm btn-edit" onclick="editUser('${uk}')">Editar</button>
+        ${!isPrimary ? `<button class="btn-sm btn-del" onclick="confirmDel('${uk}','${(u.name||u.email).replace(/'/g,"\\'")}')">Eliminar</button>` : ''}
+      </td></tr>`;
+  }).join('');
+}
+
+async function adminAddUser() {
+  const nombre   = document.getElementById('new-nombre').value.trim();
+  const apellido = document.getElementById('new-apellido').value.trim();
+  const mail     = document.getElementById('new-mail').value.trim().toLowerCase();
+  const pass     = document.getElementById('new-pass').value;
+  if (!nombre||!apellido||!mail||!mail.includes('@')||!pass) { toast('Completá todos los campos','err'); return; }
+  const uk = eKey(mail);
+  if (DB.users[uk]) { toast('Ese mail ya está registrado','err'); return; }
+  const user = {nombre,apellido,name:`${nombre} ${apellido}`,email:mail,passHash:hashPass(pass),preds:{},pts:0,exactos:0,resultados:0,isAdmin:false,registered:Date.now()};
+  DB.users[uk]=user;
+  await dbWrite();
+  document.getElementById('new-nombre').value='';
+  document.getElementById('new-apellido').value='';
+  document.getElementById('new-mail').value='';
+  document.getElementById('new-pass').value='';
+  renderAdminUsers(); renderRanking();
+  toast(`${nombre} ${apellido} agregado ✓`,'ok');
+}
+
+function editUser(uk) {
+  const u=DB.users[uk]; if(!u) return;
+  document.getElementById('urow-'+uk).innerHTML=`
+    <td>
+      <input type="text" value="${u.nombre||''}" id="en-${uk}" style="width:47%;padding:5px 7px;border:1.5px solid var(--g2);border-radius:var(--r);font-size:12px;margin-right:3px;">
+      <input type="text" value="${u.apellido||''}" id="ea-${uk}" style="width:47%;padding:5px 7px;border:1.5px solid var(--g2);border-radius:var(--r);font-size:12px;">
+    </td>
+    <td style="font-size:11px;color:var(--g4);">${u.email}</td>
+    <td style="font-size:11px;">${u.isAdmin?'Admin':'Jugador'}</td>
+    <td style="display:flex;gap:4px;">
+      <button class="btn-sm btn-ok" onclick="saveEditUser('${uk}')">Guardar</button>
+      <button class="btn-sm" onclick="renderAdminUsers()" style="background:var(--g2);color:var(--g5);">Cancelar</button>
+    </td>`;
+}
+
+async function saveEditUser(uk) {
+  const n=document.getElementById('en-'+uk).value.trim();
+  const a=document.getElementById('ea-'+uk).value.trim();
+  if (!n||!a) { toast('Nombre y apellido requeridos','err'); return; }
+  DB.users[uk].nombre=n; DB.users[uk].apellido=a; DB.users[uk].name=`${n} ${a}`;
+  await dbWrite();
+  renderAdminUsers(); renderRanking();
+  toast('Usuario actualizado ✓','ok');
+}
+
+function confirmDel(uk,name) {
+  document.getElementById('mc-title').textContent='Eliminar participante';
+  document.getElementById('mc-msg').textContent=`¿Eliminás a ${name}? Se borran todas sus predicciones.`;
+  document.getElementById('mc-ok').textContent='Sí, eliminar';
+  document.getElementById('mc-ok').onclick=()=>deleteUser(uk);
+  document.getElementById('modal-confirm').style.display='flex';
+}
+
+async function deleteUser(uk) {
+  delete DB.users[uk];
+  await dbWrite();
+  document.getElementById('modal-confirm').style.display='none';
+  renderAdminUsers(); renderRanking();
+  toast('Participante eliminado','');
+}
+
+// ── Rondas ───────────────────────────────────
+function renderAdminRounds() {
+  let html='';
+  for (const rnd of ROUNDS) {
+    const isOpen=DB.open[rnd.id];
+    html+=`<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--g2);">
+      <div><div style="font-size:13px;font-weight:600;">${rnd.name}</div>
+      <div style="font-size:10px;color:var(--g4);">${rnd.n} partido${rnd.n>1?'s':''}</div></div>
+      <button onclick="toggleRound('${rnd.id}')" style="padding:6px 13px;border-radius:var(--r);border:none;font-size:11px;font-weight:700;cursor:pointer;
+        background:${isOpen?'rgba(229,57,53,.1)':'var(--acc-dim)'};color:${isOpen?'var(--err)':'var(--acc)'};">
+        ${isOpen?'🔒 Cerrar':'🔓 Abrir'}</button></div>`;
+  }
+  document.getElementById('adm-rounds').innerHTML=html;
+}
+
+async function toggleRound(id) {
+  DB.open[id]=!DB.open[id];
+  await dbWrite();
+  renderAdminRounds(); renderElim();
+  toast(`Ronda ${DB.open[id]?'abierta ✓':'cerrada'}`,DB.open[id]?'ok':'');
+}
+
+// ── Resultados ───────────────────────────────
+function renderAdminResults() {
+  let html='<div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--g4);margin-bottom:7px;">Fase de Grupos</div>';
+  for (const [g,teams] of Object.entries(GROUPS)) {
+    const ms=[]; for(let i=0;i<teams.length;i++) for(let j=i+1;j<teams.length;j++) ms.push([teams[i],teams[j]]);
+    ms.forEach((m,mi)=>{
+      const k=`g${g}_${mi}`,rr=DB.results[k]||{h:'',a:''};
+      const locked=rr.h!==''&&rr.a!=='';
+      const f0=FLAGS[m[0]]||'🏳',f1=FLAGS[m[1]]||'🏳';
+      html+=`<div class="arow"><span class="ateam">${f0} ${m[0]}</span>
+        ${locked?`<span style="font-size:13px;font-weight:700;color:var(--ok);padding:0 6px;">${rr.h}:${rr.a} 🔒</span>`
+          :`<input class="rin" type="number" min="0" max="30" placeholder="–" oninput="onRes('${k}','h',this.value)">
+           <span style="color:var(--g3);font-weight:700;">:</span>
+           <input class="rin" type="number" min="0" max="30" placeholder="–" oninput="onRes('${k}','a',this.value)">`}
+        <span class="ateam" style="text-align:right;">${f1} ${m[1]}</span></div>`;
+    });
+  }
+  html+='<div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--g4);margin:12px 0 7px;">Eliminación Directa</div>';
+  let idx=0;
+  for (const rnd of ROUNDS) {
+    html+=`<div style="font-size:10px;color:var(--g4);font-weight:600;margin:8px 0 4px;">${rnd.name}</div>`;
+    for (let m=0;m<rnd.n;m++) {
+      const k=`e${idx}`,rr=DB.results[k]||{h:'',a:''};
+      const locked=rr.h!==''&&rr.a!=='';
+      html+=`<div class="arow"><span class="ateam" style="color:var(--g4);">Partido ${idx+1}</span>
+        ${locked?`<span style="font-size:13px;font-weight:700;color:var(--ok);padding:0 6px;">${rr.h}:${rr.a} 🔒</span>`
+          :`<input class="rin" type="number" min="0" max="30" placeholder="–" oninput="onRes('${k}','h',this.value)">
+           <span style="color:var(--g3);font-weight:700;">:</span>
+           <input class="rin" type="number" min="0" max="30" placeholder="–" oninput="onRes('${k}','a',this.value)">`}
+        <span class="ateam" style="text-align:right;color:var(--g4);">–</span></div>`;
+      idx++;
+    }
+  }
+  document.getElementById('adm-results').innerHTML=html;
+}
+
+function onRes(k,side,val) {
+  if (!pendingResults[k]) pendingResults[k]={h:'',a:''};
+  pendingResults[k][side]=val;
+}
+
+async function calcAll() {
+  for (const [k,rr] of Object.entries(pendingResults)) {
+    if (rr.h!==''&&rr.a!=='') DB.results[k]={h:rr.h,a:rr.a};
+  }
+  for (const [uk,u] of Object.entries(DB.users)) {
+    const p=u.preds||{};
+    let pts=0,exactos=0,resultados=0;
+    for (const [g,teams] of Object.entries(GROUPS)) {
+      const n=teams.length*(teams.length-1)/2;
+      for (let i=0;i<n;i++) {
+        const k=`g${g}_${i}`,rr=DB.results[k];
+        if(!rr||rr.h===''||rr.a==='') continue;
+        const ph=p[k+'_h']??'',pa=p[k+'_a']??'';
+        if(ph===''||pa==='') continue;
+        const {pts:pp,tag}=calcPts(ph,pa,rr.h,rr.a);
+        pts+=pp; if(tag==='exact') exactos++; if(pp>0) resultados++;
+      }
+    }
+    let idx=0;
+    for (const rnd of ROUNDS) {
+      for (let m=0;m<rnd.n;m++) {
+        const k=`e${idx}`,rr=DB.results[k];
+        if(!rr||rr.h===''||rr.a===''){idx++;continue;}
+        const ph=p[k+'_h']??'',pa=p[k+'_a']??'';
+        if(ph===''||pa===''){idx++;continue;}
+        const {pts:pp,tag}=calcPts(ph,pa,rr.h,rr.a);
+        pts+=pp; if(tag==='exact') exactos++; if(pp>0) resultados++;
+        idx++;
+      }
+    }
+    DB.users[uk].pts=pts; DB.users[uk].exactos=exactos; DB.users[uk].resultados=resultados;
+  }
+  await dbWrite();
+  renderGroups(); renderElim(); renderRanking(); renderAdminResults();
+  toast('Puntos recalculados ⚡','ok');
+}
+
+// ── Admins (solo super admin) ─────────────────
+function renderAdminAdmins() {
+  const users=Object.values(DB.users);
+  document.getElementById('adm-admins').innerHTML=users.map(u=>{
+    const uk=eKey(u.email),isPrimary=u.email===SUPER_ADMIN;
+    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--g2);">
+      <div><span style="font-size:13px;font-weight:500;">${u.name||u.email}</span>${u.isAdmin?'<span class="admin-tag">Admin</span>':''}
+      <div style="font-size:10px;color:var(--g4);">${u.email}</div></div>
+      ${!isPrimary
+        ?`<button onclick="toggleAdmin('${uk}')" style="padding:5px 11px;border-radius:var(--r);border:none;font-size:11px;font-weight:700;cursor:pointer;
+          background:${u.isAdmin?'rgba(229,57,53,.1)':'var(--acc-dim)'};color:${u.isAdmin?'var(--err)':'var(--acc)'};">
+          ${u.isAdmin?'Quitar admin':'Hacer admin'}</button>`
+        :'<span style="font-size:11px;color:var(--g4);">Super admin</span>'}
+    </div>`;
+  }).join('')||'<p style="font-size:12px;color:var(--g4);">Sin participantes</p>';
+}
+
+async function toggleAdmin(uk) {
+  const u=DB.users[uk]; if(!u) return;
+  u.isAdmin=!u.isAdmin;
+  await dbWrite();
+  renderAdminAdmins(); renderAdminUsers(); renderRanking();
+  toast(`${u.name} ${u.isAdmin?'ahora es admin 👑':'ya no es admin'}`,u.isAdmin?'ok':'');
+}
+
+// ═══════════════════════════════════════════════
+//  SETUP JSONBIN
+// ═══════════════════════════════════════════════
+function showSetup() {
+  const bi=document.getElementById('cfg-binid');
+  const ak=document.getElementById('cfg-apikey');
+  if (bi) bi.value=lsGet('binid')||'';
+  if (ak) ak.value=lsGet('apikey')||'';
+  document.getElementById('modal-setup').style.display='flex';
+}
+
+async function saveSetup() {
+  const bi=document.getElementById('cfg-binid').value.trim();
+  const ak=document.getElementById('cfg-apikey').value.trim();
+  if (!bi||!ak) { toast('Completá los dos campos','err'); return; }
+  BIN_ID=bi; API_KEY=ak;
+  lsSet('binid',BIN_ID); lsSet('apikey',API_KEY);
+  document.getElementById('modal-setup').style.display='none';
+  const ok=await dbRead();
+  if (ok) { lsSet('db',DB); toast('Conectado a JSONBin ✓','ok'); loadAndRender(); }
+  else toast('No se pudo conectar. Revisá los datos.','err');
+}
+
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href)
+    .then(()=>toast('Link copiado ✓','ok')).catch(()=>{});
+}
+
+// ═══════════════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════════════
+let toastT;
+function toast(msg,type) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='toast'+(type?' '+type:'')+' show';
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// ═══════════════════════════════════════════════
+//  AUTO-LOGIN
+// ═══════════════════════════════════════════════
+(async () => {
+  const session=lsGet('session');
+  if (!session||!session.email) return;
+
+  // Show spinner while loading
+  document.getElementById('login-spinner').style.display='';
+  document.querySelectorAll('.step').forEach(s=>s.style.visibility='hidden');
+
+  const connected=await dbRead();
+  if (!connected) { const saved=lsGet('db'); if(saved) DB=saved; }
+
+  document.getElementById('login-spinner').style.display='none';
+  document.querySelectorAll('.step').forEach(s=>s.style.visibility='');
+
+  const key=eKey(session.email);
+  const user=DB.users[key];
+  if (user) {
+    me=session.email; meData=user;
+    bootApp();
+  }
+})();
+</script>
+</body>
+</html>
