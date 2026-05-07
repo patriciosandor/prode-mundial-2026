@@ -477,26 +477,61 @@ input,button{font-family:inherit;}
 // ═══════════════════════════════════════════════
 const SUPER_ADMIN = 'patriciosandor@gmail.com';
 
-// Códigos ISO 3166-1 alpha-2 para flagcdn.com
-const FLAG_CODES = {
-  'México':'mx','EE.UU.':'us','Canadá':'ca','Honduras':'hn',
-  'Argentina':'ar','Chile':'cl','Perú':'pe','Bolivia':'bo',
-  'Brasil':'br','Colombia':'co','Venezuela':'ve','Ecuador':'ec',
-  'España':'es','Portugal':'pt','Marruecos':'ma','Camerún':'cm',
-  'Francia':'fr','Bélgica':'be','Países Bajos':'nl','Alemania':'de',
-  'Inglaterra':'gb-eng','Italia':'it','Croacia':'hr','Eslovaquia':'sk',
-  'Japón':'jp','Corea del Sur':'kr','Arabia Saudita':'sa','Australia':'au',
-  'Senegal':'sn','Egipto':'eg','Nigeria':'ng','Ghana':'gh',
-  'Uruguay':'uy','Paraguay':'py','Costa Rica':'cr','Panamá':'pa',
-  'Serbia':'rs','Polonia':'pl','Ucrania':'ua','Hungría':'hu',
-  'Turquía':'tr','Irán':'ir','Irak':'iq','Qatar':'qa',
-  'Costa de Marfil':'ci','Argelia':'dz','Malí':'ml','Tanzania':'tz'
+const FLAGS_MAP = {
+  'México':'https://flagcdn.com/w20/mx.png',
+  'EE.UU.':'https://flagcdn.com/w20/us.png',
+  'Canadá':'https://flagcdn.com/w20/ca.png',
+  'Honduras':'https://flagcdn.com/w20/hn.png',
+  'Argentina':'https://flagcdn.com/w20/ar.png',
+  'Chile':'https://flagcdn.com/w20/cl.png',
+  'Perú':'https://flagcdn.com/w20/pe.png',
+  'Bolivia':'https://flagcdn.com/w20/bo.png',
+  'Brasil':'https://flagcdn.com/w20/br.png',
+  'Colombia':'https://flagcdn.com/w20/co.png',
+  'Venezuela':'https://flagcdn.com/w20/ve.png',
+  'Ecuador':'https://flagcdn.com/w20/ec.png',
+  'España':'https://flagcdn.com/w20/es.png',
+  'Portugal':'https://flagcdn.com/w20/pt.png',
+  'Marruecos':'https://flagcdn.com/w20/ma.png',
+  'Camerún':'https://flagcdn.com/w20/cm.png',
+  'Francia':'https://flagcdn.com/w20/fr.png',
+  'Bélgica':'https://flagcdn.com/w20/be.png',
+  'Países Bajos':'https://flagcdn.com/w20/nl.png',
+  'Alemania':'https://flagcdn.com/w20/de.png',
+  'Inglaterra':'https://flagcdn.com/w20/gb-eng.png',
+  'Italia':'https://flagcdn.com/w20/it.png',
+  'Croacia':'https://flagcdn.com/w20/hr.png',
+  'Eslovaquia':'https://flagcdn.com/w20/sk.png',
+  'Japón':'https://flagcdn.com/w20/jp.png',
+  'Corea del Sur':'https://flagcdn.com/w20/kr.png',
+  'Arabia Saudita':'https://flagcdn.com/w20/sa.png',
+  'Australia':'https://flagcdn.com/w20/au.png',
+  'Senegal':'https://flagcdn.com/w20/sn.png',
+  'Egipto':'https://flagcdn.com/w20/eg.png',
+  'Nigeria':'https://flagcdn.com/w20/ng.png',
+  'Ghana':'https://flagcdn.com/w20/gh.png',
+  'Uruguay':'https://flagcdn.com/w20/uy.png',
+  'Paraguay':'https://flagcdn.com/w20/py.png',
+  'Costa Rica':'https://flagcdn.com/w20/cr.png',
+  'Panamá':'https://flagcdn.com/w20/pa.png',
+  'Serbia':'https://flagcdn.com/w20/rs.png',
+  'Polonia':'https://flagcdn.com/w20/pl.png',
+  'Ucrania':'https://flagcdn.com/w20/ua.png',
+  'Hungría':'https://flagcdn.com/w20/hu.png',
+  'Turquía':'https://flagcdn.com/w20/tr.png',
+  'Irán':'https://flagcdn.com/w20/ir.png',
+  'Irak':'https://flagcdn.com/w20/iq.png',
+  'Qatar':'https://flagcdn.com/w20/qa.png',
+  'Costa de Marfil':'https://flagcdn.com/w20/ci.png',
+  'Argelia':'https://flagcdn.com/w20/dz.png',
+  'Malí':'https://flagcdn.com/w20/ml.png',
+  'Tanzania':'https://flagcdn.com/w20/tz.png'
 };
 
 function FLAGS(team) {
-  const code = FLAG_CODES[team];
-  if (!code) return '<span style="font-size:14px;">🏳</span>';
-  return `<img src="https://flagcdn.com/20x15/${code}.png" width="20" height="15" alt="${team}" style="border-radius:2px;vertical-align:middle;flex-shrink:0;">`;
+  const url = FLAGS_MAP[team];
+  if (!url) return '';
+  return `<img src="${url}" width="20" height="13" alt="${team}" style="display:inline-block;vertical-align:middle;border-radius:2px;margin-right:3px;flex-shrink:0;">`;
 }
 
 const GROUPS = {
