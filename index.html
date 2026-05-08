@@ -534,8 +534,9 @@ const lsGet = k => { try { return JSON.parse(localStorage.getItem('p26_'+k)); } 
 const lsSet = (k,v) => { try { localStorage.setItem('p26_'+k, JSON.stringify(v)); } catch(e) {} };
 
 let DB = { users:{}, results:{}, open:{} };
-let BIN_ID  = lsGet('binid')  || '';
-let API_KEY = lsGet('apikey') || '';
+// JSONBin configurado — todos los usuarios comparten esta base de datos
+let BIN_ID  = lsGet('binid')  || '69fd416aadc21f119a6c76a3';
+let API_KEY = lsGet('apikey') || '$2a$10$jbVetsDZtbzFA7MMiioq0etoM6xDC/PxkBDMaEe3gfQ.LMTtJYo0e';
 
 const binUrl = () => `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
