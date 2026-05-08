@@ -400,39 +400,14 @@ input,button{font-family:inherit;}
     <!-- GRUPOS -->
     <div id="tab-grp" style="display:none;">
       <div class="sec-hd"><div><h2>Fase de Grupos</h2><p>Completá el marcador de cada partido</p></div></div>
-      <!-- Sistema de puntos resumido -->
-      <div style="background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:1rem;margin-bottom:1.25rem;box-shadow:var(--sh);">
-        <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--g4);margin-bottom:.75rem;">Sistema de puntos</div>
-        <div style="display:flex;flex-direction:column;gap:6px;">
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#FFF3CD;border-radius:var(--r);border-left:3px solid #F5A623;">
-            <span style="font-size:13px;font-weight:600;">⭐ Marcador exacto <span style="font-size:11px;color:var(--g4);font-weight:400;">— Ej: dijiste 2-1 y salió 2-1</span></span>
-            <span style="font-size:18px;font-weight:800;color:var(--acc);">8 pts</span>
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#D4EDDA;border-radius:var(--r);border-left:3px solid #00B86B;">
-            <span style="font-size:13px;font-weight:600;">≈ Resultado + ±1 gol por equipo <span style="font-size:11px;color:var(--g4);font-weight:400;">— Ej: dijiste 3-1 y salió 2-1</span></span>
-            <span style="font-size:18px;font-weight:800;color:var(--acc);">6 pts</span>
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#E8F4FD;border-radius:var(--r);border-left:3px solid #0c5460;">
-            <span style="font-size:13px;font-weight:600;">🤝 Empate exacto <span style="font-size:11px;color:var(--g4);font-weight:400;">— Ej: dijiste 1-1 y salió 1-1</span></span>
-            <span style="font-size:18px;font-weight:800;color:var(--acc);">6 pts</span>
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#D1ECF1;border-radius:var(--r);border-left:3px solid #0057D8;">
-            <span style="font-size:13px;font-weight:600;">≈ Resultado + ±2 goles por equipo <span style="font-size:11px;color:var(--g4);font-weight:400;">— Ej: dijiste 3-1 y salió 1-0</span></span>
-            <span style="font-size:18px;font-weight:800;color:var(--acc);">5 pts</span>
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#FFF8E1;border-radius:var(--r);border-left:3px solid #F5A623;">
-            <span style="font-size:13px;font-weight:600;">🤝 Empate acertado <span style="font-size:11px;color:var(--g4);font-weight:400;">— Acertaste empate pero no el marcador</span></span>
-            <span style="font-size:18px;font-weight:800;color:var(--acc);">4 pts</span>
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:var(--g1);border-radius:var(--r);border-left:3px solid var(--g3);">
-            <span style="font-size:13px;font-weight:600;">✓ Resultado correcto <span style="font-size:11px;color:var(--g4);font-weight:400;">— Acertaste quién gana pero no el marcador</span></span>
-            <span style="font-size:18px;font-weight:800;color:var(--acc);">3 pts</span>
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#F8D7DA;border-radius:var(--r);border-left:3px solid var(--err);">
-            <span style="font-size:13px;font-weight:600;">✗ Resultado incorrecto</span>
-            <span style="font-size:18px;font-weight:800;color:var(--g3);">0 pts</span>
-          </div>
-        </div>
+      <div class="pts-chips">
+        <div class="pts-chip"><span class="v">8</span><span class="l">Marcador exacto</span></div>
+        <div class="pts-chip"><span class="v">6</span><span class="l">±1 gol c/equipo</span></div>
+        <div class="pts-chip"><span class="v">6</span><span class="l">Empate exacto</span></div>
+        <div class="pts-chip"><span class="v">5</span><span class="l">±2 goles c/equipo</span></div>
+        <div class="pts-chip"><span class="v">4</span><span class="l">Empate acertado</span></div>
+        <div class="pts-chip"><span class="v">3</span><span class="l">Resultado correcto</span></div>
+        <div class="pts-chip"><span class="v">0</span><span class="l">Incorrecto</span></div>
       </div>
       <div class="prog">
         <div class="prog-lbl"><span>Progreso</span><span id="prog-txt">0 / 48</span></div>
