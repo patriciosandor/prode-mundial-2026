@@ -366,16 +366,30 @@ input,button{font-family:inherit;}
         <div style="background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:1.5rem;margin-bottom:1rem;box-shadow:var(--sh);">
           <h3 style="font-size:15px;font-weight:700;margin-bottom:1rem;color:var(--acc);">📋 Cómo participar</h3>
           <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--g5);line-height:1.7;">
-            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:var(--acc);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;">1</span><span>Andá a la pestaña <strong>Grupos</strong> y completá el marcador que creés que va a salir en cada partido.</span></div>
-            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:var(--acc);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;">2</span><span>Apretá <strong>Guardar predicciones</strong> antes de que empiece cada partido.</span></div>
-            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:var(--acc);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;">3</span><span>Una vez que el admin cargue los resultados, tus puntos se calculan automáticamente.</span></div>
-            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:var(--acc);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;">4</span><span>Seguí el <strong>Ranking</strong> para ver cómo vas contra el resto del equipo.</span></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:var(--acc);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;">1</span><span>Andá a la pestaña <strong>Grupos</strong> y completá el marcador que creés que va a salir en <strong>todos</strong> los partidos de la fase de grupos.</span></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:var(--acc);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;">2</span><span>Apretá <strong>Guardar predicciones</strong>. ⚠ <strong>Solo podés guardar una vez</strong> — después quedan bloqueadas para siempre y no se pueden modificar.</span></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:var(--acc);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;">3</span><span>A medida que se juegan los partidos, el admin carga los resultados automáticamente. Tus puntos se actualizan solos.</span></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:var(--acc);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;">4</span><span>Cuando el admin habilite la <strong>Eliminación directa</strong>, vas a poder cargar tus predicciones para esa ronda.</span></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:var(--acc);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;">5</span><span>Seguí el <strong>Ranking</strong> para ver cómo vas contra el resto del equipo en tiempo real.</span></div>
           </div>
         </div>
 
-        <div style="background:var(--acc-dim);border:1px solid rgba(161,0,255,.2);border-radius:var(--r2);padding:1.25rem;box-shadow:var(--sh);">
-          <h3 style="font-size:14px;font-weight:700;margin-bottom:6px;color:var(--acc);">⚠️ Importante</h3>
-          <p style="font-size:13px;color:var(--g5);line-height:1.6;">Una vez que empieza un partido <strong>no podés cambiar tu predicción</strong>. Guardá tus picks antes de que arranque cada fecha.</p>
+        <!-- DEADLINE BANNER -->
+        <div id="deadline-banner" style="background:linear-gradient(135deg,#A100FF,#7500BF);border-radius:var(--r2);padding:1.5rem;text-align:center;box-shadow:0 4px 20px rgba(161,0,255,.3);">
+          <div style="font-size:28px;margin-bottom:8px;">⏰</div>
+          <div style="color:#fff;font-size:18px;font-weight:700;margin-bottom:6px;">Fecha límite para cargar predicciones</div>
+          <div style="color:rgba(255,255,255,.9);font-size:28px;font-weight:800;margin-bottom:8px;" id="deadline-date">9 de junio de 2026 — 23:59 hs</div>
+          <div style="color:rgba(255,255,255,.75);font-size:14px;" id="deadline-countdown">Calculando...</div>
+        </div>
+
+        <div style="background:#FFF8E1;border:2px solid #F5A623;border-radius:var(--r2);padding:1.25rem;box-shadow:var(--sh);">
+          <h3 style="font-size:15px;font-weight:700;margin-bottom:8px;color:#E65100;">⚠️ Importante — Leé antes de jugar</h3>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--g5);line-height:1.7;">
+            <div>🔒 Las predicciones de la <strong>fase de grupos se guardan una sola vez</strong> y quedan bloqueadas para siempre. <strong>Ni vos ni el admin las puede cambiar.</strong></div>
+            <div>⏰ Tenés tiempo hasta el <strong>9 de junio a las 23:59</strong> para cargar y guardar tus predicciones. Después de esa fecha el sistema las cierra automáticamente.</div>
+            <div>🔓 La <strong>eliminación directa</strong> se habilita ronda por ronda. Cada ronda también se bloquea al guardar.</div>
+            <div>💡 ¡Pensá bien antes de confirmar! No hay marcha atrás.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -511,37 +525,32 @@ input,button{font-family:inherit;}
   </div>
 </div>
 
-<!-- MODAL SETUP JSONBIN -->
-<div class="modal-bg" id="modal-setup" style="display:none;" onclick="if(event.target===this)this.style.display='none'">
-  <div class="modal setup-modal" style="max-height:90vh;overflow-y:auto;">
-    <h3 style="margin-bottom:1rem;">⚙ Configurar JSONBin</h3>
-    <div class="setup-step">
-      <h4>PASO 1 — Crear cuenta gratis</h4>
-      <p>Entrá a <strong>jsonbin.io</strong> y creá una cuenta gratuita.</p>
-    </div>
-    <div class="setup-step">
-      <h4>PASO 2 — Crear un Bin</h4>
-      <p>Click en <strong>"Create Bin"</strong> → pegá: <code>{"users":{},"results":{},"open":{}}</code> → copiá el <strong>Bin ID</strong></p>
-    </div>
-    <div class="setup-step">
-      <h4>PASO 3 — API Key</h4>
-      <p>Perfil → <strong>API Keys</strong> → creá una clave nueva y copiala.</p>
-    </div>
-    <div class="setup-step">
-      <h4>PASO 4 — Pegá los datos acá</h4>
-      <div class="field" style="margin-top:.5rem;"><label>Bin ID</label><input type="text" id="cfg-binid" placeholder="6xxxxxxxxxxxxxxxxxxxxxx"></div>
-      <div class="field"><label>API Key</label><input type="text" id="cfg-apikey" placeholder="$2a$10$xxxxxx..."></div>
-    </div>
-    <button class="btn-full" onclick="saveSetup()">Guardar y conectar</button>
-    <button class="btn-full grey" onclick="document.getElementById('modal-setup').style.display='none'">Cerrar</button>
-  </div>
-</div>
-
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <script>
 // ═══════════════════════════════════════════════
 //  CONSTANTES
 // ═══════════════════════════════════════════════
 const SUPER_ADMIN = 'patriciosandor@gmail.com';
+
+// Fecha límite para cargar predicciones: 9 de junio 2026 a las 23:59 (2 días antes del Mundial)
+const DEADLINE = new Date('2026-06-09T23:59:00');
+
+function isPastDeadline() {
+  return new Date() > DEADLINE;
+}
+
+function deadlineMessage() {
+  const now = new Date();
+  const diff = DEADLINE - now;
+  if (diff <= 0) return null;
+  const days  = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+  if (days > 0) return `Quedan ${days} día${days>1?'s':''} y ${hours}h para cerrar las predicciones`;
+  if (hours > 0) return `¡Quedan solo ${hours} hora${hours>1?'s':''} para cargar tus predicciones!`;
+  const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
+  return `¡Quedan ${mins} minuto${mins>1?'s':''}! Guardá tus predicciones ahora`;
+}
 
 // Banderas como emojis Unicode — renderizadas via Twemoji (funciona en todos los navegadores)
 const FLAGS_EMOJI = {
@@ -599,35 +608,64 @@ const lsGet = k => { try { return JSON.parse(localStorage.getItem('p26_'+k)); } 
 const lsSet = (k,v) => { try { localStorage.setItem('p26_'+k, JSON.stringify(v)); } catch(e) {} };
 
 let DB = { users:{}, results:{}, open:{} };
-// JSONBin configurado — todos los usuarios comparten esta base de datos
-let BIN_ID  = lsGet('binid')  || '69fd416aadc21f119a6c76a3';
-let API_KEY = lsGet('apikey') || '$2a$10$jbVetsDZtbzFA7MMiioq0etoM6xDC/PxkBDMaEe3gfQ.LMTtJYo0e';
 
-const binUrl = () => `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+// ═══════════════════════════════════════════════
+//  FIREBASE
+// ═══════════════════════════════════════════════
+const firebaseConfig = {
+  apiKey: "AIzaSyAM7xk1TZeXkPSSx2DBkH-5M29AyPtcp_Y",
+  authDomain: "prode-mundial-2026-a6101.firebaseapp.com",
+  databaseURL: "https://prode-mundial-2026-a6101-default-rtdb.firebaseio.com",
+  projectId: "prode-mundial-2026-a6101",
+  storageBucket: "prode-mundial-2026-a6101.firebasestorage.app",
+  messagingSenderId: "169247499994",
+  appId: "1:169247499994:web:3ce9669afee561c760e7e3"
+};
+
+if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+const fbdb = firebase.database();
 
 async function dbRead() {
-  if (!BIN_ID || !API_KEY) return false;
   try {
-    const r = await fetch(binUrl(), { headers:{'X-Master-Key':API_KEY} });
-    if (!r.ok) return false;
-    const j = await r.json();
-    DB = j.record || {users:{},results:{},open:{}};
+    const snap = await fbdb.ref('/').once('value');
+    const val = snap.val();
+    if (val) DB = val;
+    if (!DB.users)   DB.users   = {};
+    if (!DB.results) DB.results = {};
+    if (!DB.open)    DB.open    = {};
+    lsSet('db', DB);
     return true;
-  } catch(e) { return false; }
+  } catch(e) {
+    console.error('Firebase read:', e);
+    const saved = lsGet('db');
+    if (saved) DB = saved;
+    return false;
+  }
 }
 
 async function dbWrite() {
   lsSet('db', DB);
-  if (!BIN_ID || !API_KEY) return false;
   try {
-    const r = await fetch(binUrl(), {
-      method:'PUT',
-      headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},
-      body: JSON.stringify(DB)
-    });
-    return r.ok;
-  } catch(e) { return false; }
+    await fbdb.ref('/').set(DB);
+    return true;
+  } catch(e) {
+    console.error('Firebase write:', e);
+    return false;
+  }
 }
+
+async function dbWriteUser(email) {
+  lsSet('db', DB);
+  try {
+    await fbdb.ref('users/' + eKey(email)).set(DB.users[eKey(email)]);
+    return true;
+  } catch(e) {
+    console.error('Firebase write user:', e);
+    return false;
+  }
+}
+
+function isDbConfigured() { return true; }
 
 // ═══════════════════════════════════════════════
 //  STATE
@@ -651,6 +689,14 @@ function hashPass(pass) {
     h = (Math.imul(31, h) + pass.charCodeAt(i)) | 0;
   }
   return h.toString(36);
+}
+
+// BUG 3 FIX: normalizar usuarios viejos que no tienen los campos nuevos
+function normalizeUser(user) {
+  if (!user) return user;
+  if (user.predsSaved === undefined) user.predsSaved = false;
+  if (!user.elimSaved || typeof user.elimSaved !== 'object') user.elimSaved = {};
+  return user;
 }
 
 function isSuperAdmin() {
@@ -761,12 +807,13 @@ async function doLoginExisting() {
     if (!user) {
       // Primera vez: crear perfil automáticamente
       DB.users[uk] = {nombre:'Patricio',apellido:'Sandor',name:'Patricio Sandor',
-        email:mail,passHash:hashPass('Patricio011'),preds:{},predsSaved:false,pts:0,exactos:0,resultados:0,
+        email:mail,passHash:hashPass('Patricio011'),preds:{},predsSaved:false,elimSaved:{},pts:0,exactos:0,resultados:0,
         isAdmin:true,registered:Date.now()};
       await dbWrite();
     } else {
       DB.users[uk].isAdmin = true;
     }
+    normalizeUser(DB.users[uk]);
     me = mail; meData = DB.users[uk];
     lsSet('session', {email:mail});
     bootApp();
@@ -782,6 +829,7 @@ async function doLoginExisting() {
     return;
   }
 
+  normalizeUser(user);
   me = mail; meData = user;
   lsSet('session', {email:mail});
   bootApp();
@@ -810,7 +858,8 @@ async function doRegister() {
     email: mail,
     passHash: hashPass(pass1),
     preds: {},
-    predsSaved: false,  // se vuelve true cuando guarda por primera vez
+    predsSaved: false,  // true cuando guarda predicciones de grupos
+    elimSaved:  {},     // {oct:true, cua:true, ...} por ronda
     pts: 0, exactos: 0, resultados: 0,
     isAdmin: mail === SUPER_ADMIN,
     registered: Date.now()
@@ -820,6 +869,7 @@ async function doRegister() {
   await dbWrite();
   toast('¡Bienvenido al prode! 🎉','ok');
 
+  normalizeUser(user);
   me = mail; meData = user;
   lsSet('session', {email:mail});
   bootApp();
@@ -865,6 +915,7 @@ function bootApp() {
   if (isAdmin()) renderAdmin();
   setSave(true);
   renderSaveBar();
+  startCountdown();
 }
 
 async function loadAndRender() {
@@ -900,39 +951,29 @@ function calcPts(ph,pa,rh,ra) {
   const [phn,pan,rhn,ran] = [x(ph),x(pa),x(rh),x(ra)];
   if ([phn,pan,rhn,ran].some(v => v==null||isNaN(v))) return {pts:0,tag:''};
 
-  const pr=getRes(ph,pa), rr=getRes(rh,ra);
+  const pr = getRes(ph,pa);
+  const rr = getRes(rh,ra);
   if (!pr||!rr) return {pts:0,tag:''};
 
-  // Resultado incorrecto
-  if (pr!==rr) return {pts:0,tag:'miss'};
+  // PASO 1: Si el resultado es incorrecto → 0 pts, fin.
+  if (pr !== rr) return {pts:0,tag:'miss'};
 
-  // Empate acertado
-  if (rr==='D') {
-    // Marcador exacto en empate: 4+2=6
-    if (phn===rhn && pan===ran) return {pts:6,tag:'exact'};
-    // Empate acertado sin marcador exacto: 4
-    return {pts:4,tag:'draw'};
+  // PASO 2: Empate acertado — solo dos casos, sin ±1 ni ±2
+  if (rr === 'D') {
+    if (phn===rhn && pan===ran) return {pts:6,tag:'exact'}; // exacto: 4+2
+    return {pts:4,tag:'draw'};                               // solo empate
   }
 
-  // Ganador acertado — comparar goles del ganador
-  // Determinar cuántos goles hizo el ganador en prediccion y en resultado
-  const predWin = phn>pan ? phn : pan;
-  const predLos = phn>pan ? pan : phn;
-  const realWin = rhn>ran ? rhn : ran;
-  const realLos = rhn>ran ? ran : rhn;
+  // PASO 3: Victoria acertada — calcular diferencia por equipo
+  // diff_L = diferencia en goles del equipo local
+  // diff_V = diferencia en goles del equipo visitante
+  const diffL = Math.abs(phn - rhn);
+  const diffV = Math.abs(pan - ran);
 
-  // Marcador exacto
-  if (phn===rhn && pan===ran) return {pts:8,tag:'exact'};
-
-  // Diferencia de goles del ganador respecto a lo predicho
-  const diffWin = Math.abs(predWin - realWin);
-  const diffLos = Math.abs(predLos - realLos);
-
-  if (diffWin<=1 && diffLos<=1) return {pts:6,tag:'n1'};
-  if (diffWin<=2 && diffLos<=2) return {pts:5,tag:'n2'};
-
-  // Solo acertó el resultado
-  return {pts:3,tag:'res'};
+  if (diffL===0 && diffV===0) return {pts:8,tag:'exact'}; // marcador exacto
+  if (diffL<=1  && diffV<=1)  return {pts:6,tag:'n1'};    // ±1 por equipo
+  if (diffL<=2  && diffV<=2)  return {pts:5,tag:'n2'};    // ±2 por equipo
+  return {pts:3,tag:'res'};                                 // solo resultado
 }
 
 const TAG_LBL = {exact:'⭐ Exacto',n1:'≈±1 gol',n2:'≈±2 goles',res:'✓ Resultado',draw:'🤝 Empate',miss:'✗ 0pts'};
@@ -955,7 +996,7 @@ function renderGroups() {
       const scored = rr&&rr.h!==''&&rr.a!==''&&ph!==''&&pa!=='';
       const r  = scored ? calcPts(ph,pa,rr.h,rr.a) : null;
       const tag = r&&r.tag ? `<span class="ptag ${TAG_CLS[r.tag]}">${TAG_LBL[r.tag]}</span>` : '';
-      const grpLocked = meData && meData.predsSaved;
+      const grpLocked = (meData && meData.predsSaved) || (isPastDeadline() && !isAdmin());
       html += `<div class="mrow">
         <span class="mteam">${FLAGS(m[0])}${m[0]}</span>
         <div class="swrap">
@@ -994,9 +1035,13 @@ function renderElim() {
   let html='', idx=0;
   for (const rnd of ROUNDS) {
     const isOpen = DB.open[rnd.id];
+    const roundLocked2 = meData && meData.elimSaved && meData.elimSaved[rnd.id];
+    const badgeText = !isOpen ? 'Bloqueado 🔒' : roundLocked2 ? '🔒 Guardado' : 'Abierto';
+    const badgeCls  = !isOpen ? 'rb-lock' : roundLocked2 ? 'rb-lock' : 'rb-open';
     html += `<div class="rnd-block"><div class="rnd-hd">
       <span class="rnd-title">${rnd.name}</span>
-      <span class="rnd-badge ${isOpen?'rb-open':'rb-lock'}">${isOpen?'Abierto':'Bloqueado 🔒'}</span>
+      <span class="rnd-badge ${badgeCls}">${badgeText}</span>
+      ${isOpen && !roundLocked2 ? `<button class="btn-sv" style="font-size:11px;padding:5px 12px;margin-left:auto;" onclick="saveElimRound('${rnd.id}')">Guardar ronda</button>` : ''}
       <div class="rnd-line"></div></div>`;
     for (let m=0;m<rnd.n;m++) {
       const k  = `e${idx}`;
@@ -1006,7 +1051,8 @@ function renderElim() {
       const scored=rr&&rr.h!==''&&rr.a!==''&&ph!==''&&pa!=='';
       const r=scored?calcPts(ph,pa,rr.h,rr.a):null;
       const tag=r&&r.tag?`<span class="ptag ${TAG_CLS[r.tag]}">${TAG_LBL[r.tag]}</span>`:'';
-      const ro=isOpen?'':'readonly';
+      const roundLocked = meData && meData.elimSaved && meData.elimSaved[rnd.id];
+      const ro = (!isOpen || roundLocked) ? 'readonly' : '';
       html += `<div class="erow">
         <input class="eteam" type="text" value="${th}" placeholder="Equipo local" ${ro} oninput="onInp('${k}_th',this.value)">
         <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;">
@@ -1057,6 +1103,12 @@ function renderRanking() {
 //  INPUT / SAVE
 // ═══════════════════════════════════════════════
 function onInp(key, val) {
+  // Bloquear si pasó la fecha límite (salvo el admin)
+  if (isPastDeadline() && !isAdmin()) {
+    toast('El plazo para cargar predicciones ya cerró (9 de junio)','err');
+    renderGroups(); // restaurar valores
+    return;
+  }
   if (!meData.preds) meData.preds = {};
   meData.preds[key] = val;
   DB.users[eKey(me)] = meData;
@@ -1066,6 +1118,10 @@ function onInp(key, val) {
 }
 
 async function savePreds() {
+  if (isPastDeadline() && !isAdmin()) {
+    toast('El plazo para cargar predicciones ya cerró el 9 de junio','err');
+    return;
+  }
   if (meData.predsSaved) {
     toast('Tus predicciones ya están guardadas y no se pueden modificar','err');
     return;
@@ -1079,10 +1135,10 @@ async function savePreds() {
     meData.predsSaved = true;
   }
   DB.users[eKey(me)] = meData;
-  const ok = await dbWrite();
+  const ok = await dbWriteUser(me);
   dirty = false;
   setSave(true);
-  renderGroups(); // re-render to lock inputs
+  renderGroups();
   renderSaveBar();
   toast(ok ? '¡Predicciones guardadas! Ya no se pueden modificar ✓' : 'Guardado localmente ✓','ok');
 }
@@ -1092,18 +1148,51 @@ function setSave(ok) {
   document.getElementById('stxt').textContent  = ok ? 'Guardado' : 'Cambios sin guardar';
 }
 
+// Guardar predicciones de eliminación por ronda (se bloquean al guardar)
+async function saveElimRound(roundId) {
+  if (!meData.elimSaved) meData.elimSaved = {};
+  if (meData.elimSaved[roundId]) {
+    toast('Tus predicciones para esta ronda ya están bloqueadas','err');
+    return;
+  }
+  const confirmed = window.confirm(
+    '⚠ Una vez que guardes estas predicciones NO podrás modificarlas.\n\n¿Estás seguro?'
+  );
+  if (!confirmed) return;
+  meData.elimSaved[roundId] = true;
+  DB.users[eKey(me)] = meData;
+  const ok = await dbWrite();
+  dirty = false;
+  setSave(true);
+  renderElim();
+  toast(ok ? '¡Predicciones guardadas y bloqueadas! 🔒' : 'Guardado localmente','ok');
+}
+
 function renderSaveBar() {
   const wrap = document.getElementById('savebar-btn-wrap');
   if (!wrap) return;
   if (meData && meData.predsSaved) {
     wrap.innerHTML = '<span style="font-size:12px;color:var(--ok);font-weight:600;">🔒 Predicciones de grupos bloqueadas</span>';
+  } else if (isPastDeadline() && !isAdmin()) {
+    wrap.innerHTML = '<span style="font-size:12px;color:var(--err);font-weight:600;">⏰ Plazo cerrado — no podés guardar</span>';
   } else {
-    wrap.innerHTML = '<button class="btn-sv" onclick="savePreds()">Guardar predicciones</button>';
+    const msg = deadlineMessage();
+    wrap.innerHTML = `<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      ${msg ? `<span style="font-size:11px;color:var(--gold);font-weight:600;">⏰ ${msg}</span>` : ''}
+      <button class="btn-sv" onclick="savePreds()">Guardar predicciones</button>
+    </div>`;
   }
 }
 
 window.addEventListener('beforeunload', () => { if(dirty&&me) { DB.users[eKey(me)]=meData; lsSet('db',DB); } });
-setInterval(() => { if(dirty&&me) savePreds(); }, 20000);
+setInterval(async () => {
+  if (dirty && me) {
+    DB.users[eKey(me)] = meData;
+    await dbWriteUser(me);
+    dirty = false;
+    setSave(true);
+  }
+}, 300000); // auto-save cada 5 minutos
 
 // ═══════════════════════════════════════════════
 //  ADMIN
@@ -1142,7 +1231,7 @@ async function adminAddUser() {
   if (!nombre||!apellido||!mail||!mail.includes('@')||!pass) { toast('Completá todos los campos','err'); return; }
   const uk = eKey(mail);
   if (DB.users[uk]) { toast('Ese mail ya está registrado','err'); return; }
-  const user = {nombre,apellido,name:`${nombre} ${apellido}`,email:mail,passHash:hashPass(pass),preds:{},predsSaved:false,pts:0,exactos:0,resultados:0,isAdmin:false,registered:Date.now()};
+  const user = {nombre,apellido,name:`${nombre} ${apellido}`,email:mail,passHash:hashPass(pass),preds:{},predsSaved:false,elimSaved:{},pts:0,exactos:0,resultados:0,isAdmin:false,registered:Date.now()};
   DB.users[uk]=user;
   await dbWrite();
   document.getElementById('new-nombre').value='';
@@ -1388,25 +1477,7 @@ async function toggleAdmin(uk) {
 // ═══════════════════════════════════════════════
 //  SETUP JSONBIN
 // ═══════════════════════════════════════════════
-function showSetup() {
-  const bi=document.getElementById('cfg-binid');
-  const ak=document.getElementById('cfg-apikey');
-  if (bi) bi.value=lsGet('binid')||'';
-  if (ak) ak.value=lsGet('apikey')||'';
-  document.getElementById('modal-setup').style.display='flex';
-}
-
-async function saveSetup() {
-  const bi=document.getElementById('cfg-binid').value.trim();
-  const ak=document.getElementById('cfg-apikey').value.trim();
-  if (!bi||!ak) { toast('Completá los dos campos','err'); return; }
-  BIN_ID=bi; API_KEY=ak;
-  lsSet('binid',BIN_ID); lsSet('apikey',API_KEY);
-  document.getElementById('modal-setup').style.display='none';
-  const ok=await dbRead();
-  if (ok) { lsSet('db',DB); toast('Conectado a JSONBin ✓','ok'); loadAndRender(); }
-  else toast('No se pudo conectar. Revisá los datos.','err');
-}
+// Firebase — no requiere configuración manual
 
 function copyLink() {
   navigator.clipboard.writeText(window.location.href)
@@ -1416,6 +1487,37 @@ function copyLink() {
 // ═══════════════════════════════════════════════
 //  TOAST
 // ═══════════════════════════════════════════════
+function startCountdown() {
+  function update() {
+    const el = document.getElementById('deadline-countdown');
+    const banner = document.getElementById('deadline-banner');
+    if (!el) return;
+    const now = new Date();
+    const diff = DEADLINE - now;
+    if (diff <= 0) {
+      el.textContent = '🔒 El plazo ya cerró — no se pueden cargar más predicciones';
+      if (banner) banner.style.background = 'linear-gradient(135deg,#757575,#424242)';
+      renderSaveBar();
+      return;
+    }
+    const days  = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+    const mins  = Math.floor((diff % (1000*60*60)) / (1000*60));
+    const secs  = Math.floor((diff % (1000*60)) / 1000);
+    if (days > 0) {
+      el.textContent = `Faltan ${days}d ${hours}h ${mins}m ${secs}s`;
+    } else if (hours > 0) {
+      el.textContent = `⚡ ¡Faltan ${hours}h ${mins}m ${secs}s!`;
+      if (banner) banner.style.background = 'linear-gradient(135deg,#E65100,#BF360C)';
+    } else {
+      el.textContent = `🚨 ¡ÚLTIMOS ${mins}m ${secs}s! GUARDÁ AHORA`;
+      if (banner) banner.style.background = 'linear-gradient(135deg,#C62828,#8B0000)';
+    }
+  }
+  update();
+  setInterval(update, 1000);
+}
+
 let toastT;
 function toast(msg,type) {
   const t=document.getElementById('toast');
@@ -1443,6 +1545,7 @@ function toast(msg,type) {
   const key=eKey(session.email);
   const user=DB.users[key];
   if (user) {
+    normalizeUser(user);
     me=session.email; meData=user;
     bootApp();
   }
