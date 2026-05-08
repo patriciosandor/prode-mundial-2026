@@ -116,6 +116,7 @@ input,button{font-family:inherit;}
 .t-n2{background:#D1ECF1;color:#0c5460;}
 .t-res{background:var(--acc-dim);color:var(--acc2);}
 .t-miss{background:#F8D7DA;color:#721c24;}
+.t-win{background:#E8F5E9;color:#1B5E20;}
 .t-draw{background:#E8F4FD;color:#0c5460;}
 
 /* ELIM */
@@ -336,20 +337,24 @@ input,button{font-family:inherit;}
           <h3 style="font-size:15px;font-weight:700;margin-bottom:1rem;color:var(--acc);">📊 Sistema de puntos</h3>
           <div style="display:flex;flex-direction:column;gap:10px;">
             <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid #FFD700;">
-              <div><div style="font-weight:700;font-size:14px;">⭐ Marcador exacto</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Ej: dijiste 2-1 y salió 2-1 · o dijiste 1-1 y salió 1-1</div></div>
+              <div><div style="font-weight:700;font-size:14px;">⭐ Marcador exacto</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Acertás los goles de los dos equipos — Ej: dijiste 3-1 y salió 3-1</div></div>
               <span style="font-size:22px;font-weight:800;color:var(--acc);">8 pts</span>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid #00B86B;">
-              <div><div style="font-weight:700;font-size:14px;">≈ Resultado + ±1 gol por equipo</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Ej: dijiste 3-1 y salió 2-1 o 4-1</div></div>
-              <span style="font-size:22px;font-weight:800;color:var(--acc);">6 pts</span>
+              <div><div style="font-weight:700;font-size:14px;">🎯 Goles del ganador exactos</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Acertás cuántos hizo el ganador, el perdedor puede diferir — Ej: dijiste 3-1 y salió 3-2</div></div>
+              <span style="font-size:22px;font-weight:800;color:var(--acc);">7 pts</span>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid #0057D8;">
-              <div><div style="font-weight:700;font-size:14px;">≈ Resultado + ±2 goles por equipo</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Ej: dijiste 3-1 y salió 1-0 o 5-1</div></div>
+              <div><div style="font-weight:700;font-size:14px;">≈ Ganador ±1 gol</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">El ganador hizo 1 más o menos — Ej: dijiste 3-1, ganó 4-1 o 2-1</div></div>
               <span style="font-size:22px;font-weight:800;color:var(--acc);">5 pts</span>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid var(--g3);">
-              <div><div style="font-weight:700;font-size:14px;">✓ Resultado correcto / Empate acertado</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Acertaste quién gana (o que empataba) pero no el marcador exacto</div></div>
+              <div><div style="font-weight:700;font-size:14px;">≈ Ganador ±2 goles / Resultado correcto / Empate acertado</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Ej: dijiste 3-1, ganó 5-1 · o acertaste quién ganaba sin más</div></div>
               <span style="font-size:22px;font-weight:800;color:var(--acc);">3 pts</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid #C0C0C0;">
+              <div><div style="font-weight:700;font-size:14px;">≈ Ganador ±3 goles o más</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Acertaste quién ganaba pero muy lejos — Ej: dijiste 3-1, ganó 6-1</div></div>
+              <span style="font-size:22px;font-weight:800;color:var(--acc);">1 pt</span>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid var(--err);">
               <div><div style="font-weight:700;font-size:14px;">✗ Resultado incorrecto</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">No acertaste quién ganaba</div></div>
@@ -393,25 +398,29 @@ input,button{font-family:inherit;}
     <div id="tab-grp" style="display:none;">
       <div class="sec-hd"><div><h2>Fase de Grupos</h2><p>Completá el marcador de cada partido</p></div></div>
       <div style="display:flex;gap:8px;margin-bottom:1.25rem;">
-        <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:10px 8px;">
-          <span style="font-size:20px;font-weight:800;color:var(--acc);">8</span>
-          <span style="font-size:12px;color:var(--g4);font-weight:500;">Marcador exacto</span>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:10px 6px;">
+          <span style="font-size:22px;font-weight:800;color:var(--acc);">8</span>
+          <span style="font-size:10px;color:var(--g4);font-weight:500;text-align:center;">Exacto</span>
         </div>
-        <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:10px 8px;">
-          <span style="font-size:20px;font-weight:800;color:var(--acc);">6</span>
-          <span style="font-size:12px;color:var(--g4);font-weight:500;">±1 gol c/equipo</span>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:10px 6px;">
+          <span style="font-size:22px;font-weight:800;color:var(--acc);">7</span>
+          <span style="font-size:10px;color:var(--g4);font-weight:500;text-align:center;">Gan. exacto</span>
         </div>
-        <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:10px 8px;">
-          <span style="font-size:20px;font-weight:800;color:var(--acc);">5</span>
-          <span style="font-size:12px;color:var(--g4);font-weight:500;">±2 goles c/equipo</span>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:10px 6px;">
+          <span style="font-size:22px;font-weight:800;color:var(--acc);">5</span>
+          <span style="font-size:10px;color:var(--g4);font-weight:500;text-align:center;">Gan. ±1 gol</span>
         </div>
-        <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:10px 8px;">
-          <span style="font-size:20px;font-weight:800;color:var(--acc);">3</span>
-          <span style="font-size:12px;color:var(--g4);font-weight:500;">Resultado</span>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:10px 6px;">
+          <span style="font-size:22px;font-weight:800;color:var(--acc);">3</span>
+          <span style="font-size:10px;color:var(--g4);font-weight:500;text-align:center;">Gan. ±2 / Res.</span>
         </div>
-        <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:10px 8px;">
-          <span style="font-size:20px;font-weight:800;color:var(--g3);">0</span>
-          <span style="font-size:12px;color:var(--g4);font-weight:500;">Incorrecto</span>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:10px 6px;">
+          <span style="font-size:22px;font-weight:800;color:var(--acc);">1</span>
+          <span style="font-size:10px;color:var(--g4);font-weight:500;text-align:center;">Gan. ±3+</span>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:10px 6px;">
+          <span style="font-size:22px;font-weight:800;color:var(--g3);">0</span>
+          <span style="font-size:10px;color:var(--g4);font-weight:500;text-align:center;">Incorrecto</span>
         </div>
       </div>
       <div class="prog">
@@ -425,10 +434,11 @@ input,button{font-family:inherit;}
     <div id="tab-eli" style="display:none;">
       <div class="sec-hd"><div><h2>Eliminación Directa</h2><p>Las rondas se habilitan cuando el admin las abre</p></div></div>
       <div class="pts-chips">
-        <div class="pts-chip"><span class="v">8</span><span class="l">Marcador exacto</span></div>
-        <div class="pts-chip"><span class="v">6</span><span class="l">±1 gol c/equipo</span></div>
-        <div class="pts-chip"><span class="v">5</span><span class="l">±2 goles c/equipo</span></div>
-        <div class="pts-chip"><span class="v">3</span><span class="l">Resultado / Empate</span></div>
+        <div class="pts-chip"><span class="v">8</span><span class="l">Exacto</span></div>
+        <div class="pts-chip"><span class="v">7</span><span class="l">Gan. exacto</span></div>
+        <div class="pts-chip"><span class="v">5</span><span class="l">Gan. ±1</span></div>
+        <div class="pts-chip"><span class="v">3</span><span class="l">Gan. ±2 / Res.</span></div>
+        <div class="pts-chip"><span class="v">1</span><span class="l">Gan. ±3+</span></div>
         <div class="pts-chip"><span class="v">0</span><span class="l">Incorrecto</span></div>
       </div>
       <div id="eli-cont"></div>
@@ -1111,26 +1121,37 @@ function calcPts(ph,pa,rh,ra) {
   const rr = getRes(rh,ra);
   if (!pr||!rr) return {pts:0,tag:''};
 
-  // Resultado incorrecto
+  // Resultado incorrecto → 0 pts
   if (pr !== rr) return {pts:0,tag:'miss'};
 
-  // Marcador exacto — vale tanto para victoria como para empate
+  // Marcador exacto (vale para victoria y empate)
   if (phn===rhn && pan===ran) return {pts:8,tag:'exact'};
 
-  // Empate acertado sin marcador = resultado correcto (3 pts)
+  // Empate acertado sin marcador exacto → 3 pts
   if (rr === 'D') return {pts:3,tag:'res'};
 
-  // Victoria acertada — diferencia por equipo
-  const diffL = Math.abs(phn - rhn);
-  const diffV = Math.abs(pan - ran);
-  if (diffL<=1 && diffV<=1) return {pts:6,tag:'n1'};
-  if (diffL<=2 && diffV<=2) return {pts:5,tag:'n2'};
-  return {pts:3,tag:'res'};
+  // Victoria acertada — solo miramos al ganador
+  // Identificar goles del ganador en predicción y resultado
+  const predWin = phn > pan ? phn : pan; // goles del ganador en predicción
+  const realWin = rhn > ran ? rhn : ran; // goles del ganador en resultado
+  const diffWin = Math.abs(predWin - realWin);
+
+  // Ganador exacto (perdedor puede diferir) → 7 pts
+  if (predWin === realWin) return {pts:7,tag:'win'};
+
+  // Ganador ±1 gol → 5 pts
+  if (diffWin === 1) return {pts:5,tag:'n1'};
+
+  // Ganador ±2 goles → 3 pts
+  if (diffWin === 2) return {pts:3,tag:'n2'};
+
+  // Ganador ±3 o más → 1 pt
+  return {pts:1,tag:'res'};
 }
 
 
-const TAG_LBL = {exact:'⭐ Exacto +8',n1:'≈±1 gol +6',n2:'≈±2 goles +5',res:'✓ Resultado +3',miss:'✗ 0pts'};
-const TAG_CLS = {exact:'t-exact',n1:'t-n1',n2:'t-n2',res:'t-res',miss:'t-miss'};
+const TAG_LBL = {exact:'⭐ +8',win:'🎯 +7',n1:'±1 gol +5',n2:'±2 goles +3',res:'✓ +3',miss:'✗ 0'};
+const TAG_CLS = {exact:'t-exact',win:'t-win',n1:'t-n1',n2:'t-n2',res:'t-res',miss:'t-miss'};
 
 // ═══════════════════════════════════════════════
 //  RENDER GRUPOS
