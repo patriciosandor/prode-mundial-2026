@@ -513,6 +513,18 @@ input,button{font-family:inherit;}
 
 <div class="toast" id="toast"></div>
 
+<!-- MODAL VER PICKS -->
+<div class="modal-bg" id="modal-picks" style="display:none;" onclick="if(event.target===this)this.style.display='none'">
+  <div class="modal" style="max-width:600px;width:95%;max-height:85vh;overflow-y:auto;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+      <h3 id="picks-title" style="font-size:16px;font-weight:700;">Predicciones</h3>
+      <button onclick="document.getElementById('modal-picks').style.display='none'"
+        style="background:var(--g2);border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:14px;">✕</button>
+    </div>
+    <div id="picks-content"></div>
+  </div>
+</div>
+
 <!-- MODAL CONFIRMAR -->
 <div class="modal-bg" id="modal-confirm" style="display:none;" onclick="if(event.target===this)this.style.display='none'">
   <div class="modal">
@@ -578,20 +590,101 @@ function FLAGS(team) {
 }
 
 // Grupos OFICIALES del Mundial FIFA 2026 — Sorteo 5 dic 2025, Washington D.C.
+// Fuente: Sports Illustrated / FIFA oficial
 const GROUPS = {
   A:['México','Sudáfrica','Corea del Sur','Chequia'],
-  B:['Canadá','Suiza','Qatar','Bosnia y Herz.'],
+  B:['Canadá','Bosnia y Herz.','Qatar','Suiza'],
   C:['Brasil','Marruecos','Haití','Escocia'],
   D:['EE.UU.','Paraguay','Australia','Kosovo'],
   E:['Alemania','Curazao','Costa de Marfil','Ecuador'],
   F:['Países Bajos','Japón','Noruega','Túnez'],
-  G:['Bélgica','Croacia','Colombia','Uzbekistán'],
+  G:['Bélgica','Egipto','Irán','Nueva Zelanda'],
   H:['España','Cabo Verde','Arabia Saudita','Uruguay'],
-  I:['Francia','Noruega','Senegal','Bolivia'],
+  I:['Francia','Senegal','Bolivia','Noruega'],
   J:['Argentina','Argelia','Austria','Jordania'],
   K:['Portugal','Turquía','R.D. del Congo','Irlanda'],
   L:['Inglaterra','Eslovenia','Camerún','Panamá']
 };
+
+// Fixture OFICIAL ordenado por fecha — para admin resultados
+// Formato: [fecha_iso, grupo, equipo_local, equipo_visita]
+const FIXTURE = [
+  // Jornada 1
+  ['2026-06-11','A','México','Sudáfrica'],
+  ['2026-06-11','A','Corea del Sur','Chequia'],
+  ['2026-06-12','B','Canadá','Bosnia y Herz.'],
+  ['2026-06-12','D','EE.UU.','Paraguay'],
+  ['2026-06-13','B','Qatar','Suiza'],
+  ['2026-06-13','C','Brasil','Marruecos'],
+  ['2026-06-13','C','Haití','Escocia'],
+  ['2026-06-13','D','Australia','Kosovo'],
+  ['2026-06-14','E','Alemania','Curazao'],
+  ['2026-06-14','E','Costa de Marfil','Ecuador'],
+  ['2026-06-14','F','Países Bajos','Japón'],
+  ['2026-06-14','F','Noruega','Túnez'],
+  ['2026-06-15','G','Bélgica','Egipto'],
+  ['2026-06-15','G','Irán','Nueva Zelanda'],
+  ['2026-06-15','H','España','Cabo Verde'],
+  ['2026-06-15','H','Arabia Saudita','Uruguay'],
+  ['2026-06-16','I','Francia','Senegal'],
+  ['2026-06-16','I','Bolivia','Noruega'],
+  ['2026-06-16','J','Argentina','Argelia'],
+  ['2026-06-16','J','Austria','Jordania'],
+  ['2026-06-17','K','Portugal','Turquía'],
+  ['2026-06-17','K','R.D. del Congo','Irlanda'],
+  ['2026-06-17','L','Inglaterra','Eslovenia'],
+  ['2026-06-17','L','Camerún','Panamá'],
+  // Jornada 2
+  ['2026-06-18','A','Chequia','Sudáfrica'],
+  ['2026-06-18','A','México','Corea del Sur'],
+  ['2026-06-18','B','Suiza','Bosnia y Herz.'],
+  ['2026-06-18','B','Canadá','Qatar'],
+  ['2026-06-19','C','Escocia','Marruecos'],
+  ['2026-06-19','C','Brasil','Haití'],
+  ['2026-06-19','D','Kosovo','Paraguay'],
+  ['2026-06-19','D','EE.UU.','Australia'],
+  ['2026-06-20','E','Alemania','Costa de Marfil'],
+  ['2026-06-20','E','Curazao','Ecuador'],
+  ['2026-06-20','F','Países Bajos','Noruega'],
+  ['2026-06-20','F','Túnez','Japón'],
+  ['2026-06-21','G','Bélgica','Irán'],
+  ['2026-06-21','G','Nueva Zelanda','Egipto'],
+  ['2026-06-21','H','España','Arabia Saudita'],
+  ['2026-06-21','H','Uruguay','Cabo Verde'],
+  ['2026-06-22','I','Francia','Bolivia'],
+  ['2026-06-22','I','Noruega','Senegal'],
+  ['2026-06-22','J','Argentina','Austria'],
+  ['2026-06-22','J','Jordania','Argelia'],
+  ['2026-06-23','K','Portugal','R.D. del Congo'],
+  ['2026-06-23','K','Irlanda','Turquía'],
+  ['2026-06-23','L','Inglaterra','Camerún'],
+  ['2026-06-23','L','Panamá','Eslovenia'],
+  // Jornada 3
+  ['2026-06-24','A','Chequia','México'],
+  ['2026-06-24','A','Sudáfrica','Corea del Sur'],
+  ['2026-06-24','B','Suiza','Canadá'],
+  ['2026-06-24','B','Bosnia y Herz.','Qatar'],
+  ['2026-06-24','C','Escocia','Brasil'],
+  ['2026-06-24','C','Marruecos','Haití'],
+  ['2026-06-25','D','Kosovo','EE.UU.'],
+  ['2026-06-25','D','Paraguay','Australia'],
+  ['2026-06-25','E','Ecuador','Alemania'],
+  ['2026-06-25','E','Curazao','Costa de Marfil'],
+  ['2026-06-25','F','Japón','Noruega'],
+  ['2026-06-25','F','Túnez','Países Bajos'],
+  ['2026-06-26','G','Nueva Zelanda','Bélgica'],
+  ['2026-06-26','G','Egipto','Irán'],
+  ['2026-06-26','H','Uruguay','España'],
+  ['2026-06-26','H','Cabo Verde','Arabia Saudita'],
+  ['2026-06-27','I','Francia','Noruega'],
+  ['2026-06-27','I','Senegal','Bolivia'],
+  ['2026-06-27','J','Argentina','Jordania'],
+  ['2026-06-27','J','Argelia','Austria'],
+  ['2026-06-27','K','Portugal','Irlanda'],
+  ['2026-06-27','K','Turquía','R.D. del Congo'],
+  ['2026-06-27','L','Inglaterra','Panamá'],
+  ['2026-06-27','L','Eslovenia','Camerún'],
+];
 
 const ROUNDS = [
   {id:'oct',name:'Octavos de Final',n:8},
@@ -1215,8 +1308,9 @@ function renderAdminUsers() {
     return `<tr id="urow-${uk}">
       <td style="font-size:13px;font-weight:500;">${u.name||u.email}${u.isAdmin?'<span class="admin-tag">Admin</span>':''}</td>
       <td style="font-size:11px;color:var(--g4);">${u.email}</td>
-      <td style="font-size:11px;">${u.isAdmin?'Admin':'Jugador'}</td>
+      <td style="font-size:11px;font-weight:700;color:var(--acc);">${u.pts||0} pts</td>
       <td style="display:flex;gap:4px;flex-wrap:wrap;">
+        <button class="btn-sm" style="background:rgba(0,184,107,.12);color:var(--ok);" onclick="verPicks('${uk}')">👁 Ver picks</button>
         <button class="btn-sm btn-edit" onclick="editUser('${uk}')">Editar</button>
         ${!isPrimary ? `<button class="btn-sm btn-del" onclick="confirmDel('${uk}','${(u.name||u.email).replace(/'/g,"\\'")}')">Eliminar</button>` : ''}
       </td></tr>`;
@@ -1306,22 +1400,53 @@ async function toggleRound(id) {
 }
 
 // ── Resultados ───────────────────────────────
+// Generar clave de partido a partir de grupo y equipos
+function getMatchKey(grp, home, away) {
+  const teams = GROUPS[grp];
+  const ms = [];
+  for (let i=0;i<teams.length;i++) for (let j=i+1;j<teams.length;j++) ms.push([teams[i],teams[j]]);
+  for (let mi=0;mi<ms.length;mi++) {
+    const [t1,t2] = ms[mi];
+    if ((t1===home&&t2===away)||(t1===away&&t2===home)) return `g${grp}_${mi}`;
+  }
+  return null;
+}
+
 function renderAdminResults() {
-  let html='<div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--g4);margin-bottom:7px;">Fase de Grupos</div>';
-  for (const [g,teams] of Object.entries(GROUPS)) {
-    const ms=[]; for(let i=0;i<teams.length;i++) for(let j=i+1;j<teams.length;j++) ms.push([teams[i],teams[j]]);
-    ms.forEach((m,mi)=>{
-      const k=`g${g}_${mi}`,rr=DB.results[k]||{h:'',a:''};
-      const locked=rr.h!==''&&rr.a!=='';
-      html+=`<div class="arow"><span class="ateam">${FLAGS(m[0])} ${m[0]}</span>
-        ${locked?`<span style="font-size:13px;font-weight:700;color:var(--ok);padding:0 6px;">${rr.h}:${rr.a} 🔒</span>`
-          :`<input class="rin" type="number" min="0" max="30" placeholder="–" oninput="onRes('${k}','h',this.value)">
+  // ── Fase de grupos ordenada por fecha ──
+  let html = '<div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--g4);margin-bottom:10px;">Fase de Grupos — por fecha</div>';
+  let lastDate = '';
+  FIXTURE.forEach(([fecha,grp,home,away]) => {
+    const k = getMatchKey(grp, home, away);
+    if (!k) return;
+    const rr = DB.results[k]||{h:'',a:''};
+    const locked = rr.h!==''&&rr.a!=='';
+    const dateLabel = new Date(fecha+'T12:00:00').toLocaleDateString('es-AR',{weekday:'long',day:'numeric',month:'long'});
+    if (fecha !== lastDate) {
+      html += `<div style="font-size:10px;font-weight:700;color:var(--acc);letter-spacing:.5px;text-transform:uppercase;margin:10px 0 5px;padding:4px 8px;background:var(--acc-dim);border-radius:var(--r);">${dateLabel} · Grupo ${grp}</div>`;
+      lastDate = fecha;
+    } else {
+      // Same date, just show group
+      const last = html.lastIndexOf('border-radius:var(--r);">');
+      const labelStart = html.lastIndexOf('<div style="font-size:10px;font-weight:700;color:var(--acc)');
+      const labelContent = html.substring(labelStart, html.length);
+      if (!labelContent.includes(`Grupo ${grp}`)) {
+        html = html.substring(0, html.length - 0); // no change needed, handled in label
+      }
+    }
+    html += `<div class="arow">
+      <span class="ateam">${FLAGS(home)} ${home}</span>
+      ${locked
+        ? `<span style="font-size:13px;font-weight:700;color:var(--ok);padding:0 6px;">${rr.h}:${rr.a} 🔒</span>`
+        : `<input class="rin" type="number" min="0" max="30" placeholder="–" oninput="onRes('${k}','h',this.value)">
            <span style="color:var(--g3);font-weight:700;">:</span>
            <input class="rin" type="number" min="0" max="30" placeholder="–" oninput="onRes('${k}','a',this.value)">`}
-        <span class="ateam" style="text-align:right;">${FLAGS(m[1])} ${m[1]}</span></div>`;
-    });
-  }
-  html+='<div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--g4);margin:12px 0 7px;">Eliminación Directa</div>';
+      <span class="ateam" style="text-align:right;">${FLAGS(away)} ${away}</span>
+    </div>`;
+  });
+
+  // ── Eliminación directa ──
+  html+='<div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--g4);margin:16px 0 7px;">Eliminación Directa</div>';
   let idx=0;
   for (const rnd of ROUNDS) {
     html+=`<div style="font-size:10px;color:var(--g4);font-weight:600;margin:8px 0 4px;">${rnd.name}</div>`;
@@ -1464,6 +1589,91 @@ function renderAdminAdmins() {
         :'<span style="font-size:11px;color:var(--g4);">Super admin</span>'}
     </div>`;
   }).join('')||'<p style="font-size:12px;color:var(--g4);">Sin participantes</p>';
+}
+
+function verPicks(uk) {
+  const u = DB.users[uk];
+  if (!u) return;
+  const preds = u.preds || {};
+  document.getElementById('picks-title').textContent = `Picks de ${u.name}`;
+
+  let html = '';
+
+  // ── Grupos ──
+  html += '<div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--g4);margin-bottom:8px;">Fase de Grupos</div>';
+
+  let lastDate = '';
+  FIXTURE.forEach(([fecha,grp,home,away]) => {
+    const teams = GROUPS[grp];
+    const ms = [];
+    for (let i=0;i<teams.length;i++) for (let j=i+1;j<teams.length;j++) ms.push([teams[i],teams[j]]);
+    let mi = -1;
+    for (let x=0;x<ms.length;x++) {
+      const [t1,t2]=ms[x];
+      if((t1===home&&t2===away)||(t1===away&&t2===home)){mi=x;break;}
+    }
+    if (mi<0) return;
+    const k = `g${grp}_${mi}`;
+    const ph = preds[k+'_h']??'', pa = preds[k+'_a']??'';
+    const rr = DB.results[k];
+
+    const dateLabel = new Date(fecha+'T12:00:00').toLocaleDateString('es-AR',{weekday:'short',day:'numeric',month:'short'});
+    if (fecha !== lastDate) {
+      html += `<div style="font-size:10px;color:var(--acc);font-weight:700;margin:8px 0 4px;padding:3px 7px;background:var(--acc-dim);border-radius:var(--r);">${dateLabel} · Grupo ${grp}</div>`;
+      lastDate = fecha;
+    }
+
+    let ptsBadge = '';
+    if (rr&&rr.h!==''&&rr.a!==''&&ph!==''&&pa!=='') {
+      const {pts,tag} = calcPts(ph,pa,rr.h,rr.a);
+      const colors = {exact:'#856404',n1:'#155724',n2:'#0c5460',draw:'#0c5460',res:'var(--acc2)',miss:'#721c24'};
+      const bgs = {exact:'#FFF3CD',n1:'#D4EDDA',n2:'#D1ECF1',draw:'#D1ECF1',res:'var(--acc-dim)',miss:'#F8D7DA'};
+      if (tag) ptsBadge = `<span style="font-size:10px;padding:1px 6px;border-radius:999px;background:${bgs[tag]||'var(--g2)'};color:${colors[tag]||'var(--g4)'};font-weight:700;">${pts}pts</span>`;
+    }
+
+    const pred = ph!==''&&pa!=='' ? `<strong>${ph}-${pa}</strong>` : '<span style="color:var(--g3);">sin pick</span>';
+    const real = rr&&rr.h!==''&&rr.a!=='' ? `<span style="color:var(--g4);font-size:11px;">(real: ${rr.h}-${rr.a})</span>` : '';
+
+    html += `<div style="display:flex;align-items:center;gap:6px;padding:5px 8px;background:var(--g1);border-radius:var(--r);margin-bottom:3px;font-size:12px;">
+      <span style="flex:1;">${FLAGS(home)} ${home}</span>
+      <span style="font-weight:700;color:var(--txt);">${pred}</span>
+      ${real}
+      ${ptsBadge}
+      <span style="flex:1;text-align:right;">${FLAGS(away)} ${away}</span>
+    </div>`;
+  });
+
+  // ── Eliminación ──
+  html += '<div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--g4);margin:12px 0 8px;">Eliminación Directa</div>';
+  let idx=0;
+  for (const rnd of ROUNDS) {
+    const hasAny = Array.from({length:rnd.n},(_,m)=>preds[`e${idx+m}_h`]).some(v=>v!==undefined&&v!=='');
+    if (hasAny) {
+      html += `<div style="font-size:10px;color:var(--acc);font-weight:700;margin:6px 0 4px;">${rnd.name}</div>`;
+    }
+    for (let m=0;m<rnd.n;m++) {
+      const k=`e${idx}`;
+      const ph=preds[k+'_h']??'',pa=preds[k+'_a']??'';
+      const th=preds[k+'_th']??'',ta=preds[k+'_ta']??'';
+      if (ph!==''||pa!==''||th!==''||ta!=='') {
+        const pred = ph!==''&&pa!=='' ? `<strong>${ph}-${pa}</strong>` : '<span style="color:var(--g3);">sin marcador</span>';
+        html += `<div style="display:flex;align-items:center;gap:6px;padding:5px 8px;background:var(--g1);border-radius:var(--r);margin-bottom:3px;font-size:12px;">
+          <span style="flex:1;">${th||'?'}</span>
+          <span style="font-weight:700;">${pred}</span>
+          <span style="flex:1;text-align:right;">${ta||'?'}</span>
+        </div>`;
+      }
+      idx++;
+    }
+  }
+
+  const totalPts = Object.values(DB.users).find(x=>x.email===u.email)?.pts||0;
+  html += `<div style="margin-top:1rem;padding:10px 14px;background:var(--acc-dim);border-radius:var(--r2);text-align:center;">
+    <span style="font-size:18px;font-weight:700;color:var(--acc);">${totalPts} puntos totales</span>
+  </div>`;
+
+  document.getElementById('picks-content').innerHTML = html;
+  document.getElementById('modal-picks').style.display = 'flex';
 }
 
 async function toggleAdmin(uk) {
