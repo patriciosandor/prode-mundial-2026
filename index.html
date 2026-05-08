@@ -492,7 +492,9 @@ input,button{font-family:inherit;}
 <!-- SAVE BAR -->
 <div class="savebar" id="savebar" style="display:none;">
   <div class="save-st"><div class="sdot" id="sdot"></div><span id="stxt">Guardado</span></div>
-  <button class="btn-sv" onclick="savePreds()">Guardar predicciones</button>
+  <div id="savebar-btn-wrap">
+    <button class="btn-sv" onclick="savePreds()">Guardar predicciones</button>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -759,7 +761,7 @@ async function doLoginExisting() {
     if (!user) {
       // Primera vez: crear perfil automáticamente
       DB.users[uk] = {nombre:'Patricio',apellido:'Sandor',name:'Patricio Sandor',
-        email:mail,passHash:hashPass('Patricio011'),preds:{},pts:0,exactos:0,resultados:0,
+        email:mail,passHash:hashPass('Patricio011'),preds:{},predsSaved:false,pts:0,exactos:0,resultados:0,
         isAdmin:true,registered:Date.now()};
       await dbWrite();
     } else {
@@ -808,6 +810,7 @@ async function doRegister() {
     email: mail,
     passHash: hashPass(pass1),
     preds: {},
+    predsSaved: false,  // se vuelve true cuando guarda por primera vez
     pts: 0, exactos: 0, resultados: 0,
     isAdmin: mail === SUPER_ADMIN,
     registered: Date.now()
@@ -861,6 +864,7 @@ function bootApp() {
   renderRanking();
   if (isAdmin()) renderAdmin();
   setSave(true);
+  renderSaveBar();
 }
 
 async function loadAndRender() {
@@ -951,14 +955,15 @@ function renderGroups() {
       const scored = rr&&rr.h!==''&&rr.a!==''&&ph!==''&&pa!=='';
       const r  = scored ? calcPts(ph,pa,rr.h,rr.a) : null;
       const tag = r&&r.tag ? `<span class="ptag ${TAG_CLS[r.tag]}">${TAG_LBL[r.tag]}</span>` : '';
+      const grpLocked = meData && meData.predsSaved;
       html += `<div class="mrow">
         <span class="mteam">${FLAGS(m[0])}${m[0]}</span>
         <div class="swrap">
           <input class="sin" type="number" min="0" max="30" value="${ph}" placeholder="–"
-            oninput="onInp('${k}_h',this.value)" onfocus="this.select()">
+            ${grpLocked?'readonly':''} oninput="onInp('${k}_h',this.value)" onfocus="this.select()">
           <span class="sdot-score">:</span>
           <input class="sin" type="number" min="0" max="30" value="${pa}" placeholder="–"
-            oninput="onInp('${k}_a',this.value)" onfocus="this.select()">
+            ${grpLocked?'readonly':''} oninput="onInp('${k}_a',this.value)" onfocus="this.select()">
         </div>
         <span class="mteam r">${FLAGS(m[1])}${m[1]}</span>
         ${tag}
@@ -1061,16 +1066,40 @@ function onInp(key, val) {
 }
 
 async function savePreds() {
+  if (meData.predsSaved) {
+    toast('Tus predicciones ya están guardadas y no se pueden modificar','err');
+    return;
+  }
+  // Confirm first-time save
+  if (!meData.predsSaved) {
+    const confirmed = window.confirm(
+      '⚠ Una vez que guardes tus predicciones de grupos NO podrás modificarlas.\n\n¿Estás seguro que querés guardar?'
+    );
+    if (!confirmed) return;
+    meData.predsSaved = true;
+  }
   DB.users[eKey(me)] = meData;
   const ok = await dbWrite();
   dirty = false;
   setSave(true);
-  toast(ok ? 'Guardado y sincronizado ✓' : 'Guardado localmente ✓','ok');
+  renderGroups(); // re-render to lock inputs
+  renderSaveBar();
+  toast(ok ? '¡Predicciones guardadas! Ya no se pueden modificar ✓' : 'Guardado localmente ✓','ok');
 }
 
 function setSave(ok) {
   document.getElementById('sdot').className    = 'sdot'+(ok?' ok':' dirty');
   document.getElementById('stxt').textContent  = ok ? 'Guardado' : 'Cambios sin guardar';
+}
+
+function renderSaveBar() {
+  const wrap = document.getElementById('savebar-btn-wrap');
+  if (!wrap) return;
+  if (meData && meData.predsSaved) {
+    wrap.innerHTML = '<span style="font-size:12px;color:var(--ok);font-weight:600;">🔒 Predicciones de grupos bloqueadas</span>';
+  } else {
+    wrap.innerHTML = '<button class="btn-sv" onclick="savePreds()">Guardar predicciones</button>';
+  }
 }
 
 window.addEventListener('beforeunload', () => { if(dirty&&me) { DB.users[eKey(me)]=meData; lsSet('db',DB); } });
@@ -1113,7 +1142,7 @@ async function adminAddUser() {
   if (!nombre||!apellido||!mail||!mail.includes('@')||!pass) { toast('Completá todos los campos','err'); return; }
   const uk = eKey(mail);
   if (DB.users[uk]) { toast('Ese mail ya está registrado','err'); return; }
-  const user = {nombre,apellido,name:`${nombre} ${apellido}`,email:mail,passHash:hashPass(pass),preds:{},pts:0,exactos:0,resultados:0,isAdmin:false,registered:Date.now()};
+  const user = {nombre,apellido,name:`${nombre} ${apellido}`,email:mail,passHash:hashPass(pass),preds:{},predsSaved:false,pts:0,exactos:0,resultados:0,isAdmin:false,registered:Date.now()};
   DB.users[uk]=user;
   await dbWrite();
   document.getElementById('new-nombre').value='';
