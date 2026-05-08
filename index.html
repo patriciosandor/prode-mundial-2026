@@ -336,27 +336,19 @@ input,button{font-family:inherit;}
           <h3 style="font-size:15px;font-weight:700;margin-bottom:1rem;color:var(--acc);">📊 Sistema de puntos</h3>
           <div style="display:flex;flex-direction:column;gap:10px;">
             <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid #FFD700;">
-              <div><div style="font-weight:700;font-size:14px;">⭐ Marcador exacto</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Ej: dijiste 2-1 y salió 2-1</div></div>
+              <div><div style="font-weight:700;font-size:14px;">⭐ Marcador exacto</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Ej: dijiste 2-1 y salió 2-1 · o dijiste 1-1 y salió 1-1</div></div>
               <span style="font-size:22px;font-weight:800;color:var(--acc);">8 pts</span>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid #00B86B;">
-              <div><div style="font-weight:700;font-size:14px;">≈ Resultado + ±1 gol del ganador</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Ej: dijiste 3-1 y salió 2-1 o 4-1</div></div>
-              <span style="font-size:22px;font-weight:800;color:var(--acc);">6 pts</span>
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid #0c5460;">
-              <div><div style="font-weight:700;font-size:14px;">🤝 Empate acertado + marcador exacto</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Ej: dijiste 1-1 y salió 1-1</div></div>
+              <div><div style="font-weight:700;font-size:14px;">≈ Resultado + ±1 gol por equipo</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Ej: dijiste 3-1 y salió 2-1 o 4-1</div></div>
               <span style="font-size:22px;font-weight:800;color:var(--acc);">6 pts</span>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid #0057D8;">
-              <div><div style="font-weight:700;font-size:14px;">≈ Resultado + ±2 goles del ganador</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Ej: dijiste 3-1 y salió 1-0 o 5-1</div></div>
+              <div><div style="font-weight:700;font-size:14px;">≈ Resultado + ±2 goles por equipo</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Ej: dijiste 3-1 y salió 1-0 o 5-1</div></div>
               <span style="font-size:22px;font-weight:800;color:var(--acc);">5 pts</span>
             </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid #F5A623;">
-              <div><div style="font-weight:700;font-size:14px;">🤝 Empate acertado</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Acertaste que empataban pero no el marcador</div></div>
-              <span style="font-size:22px;font-weight:800;color:var(--acc);">4 pts</span>
-            </div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid var(--g3);">
-              <div><div style="font-weight:700;font-size:14px;">✓ Resultado correcto</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Acertaste quién gana pero no el marcador</div></div>
+              <div><div style="font-weight:700;font-size:14px;">✓ Resultado correcto / Empate acertado</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Acertaste quién gana (o que empataba) pero no el marcador exacto</div></div>
               <span style="font-size:22px;font-weight:800;color:var(--acc);">3 pts</span>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid var(--err);">
@@ -400,14 +392,30 @@ input,button{font-family:inherit;}
     <!-- GRUPOS -->
     <div id="tab-grp" style="display:none;">
       <div class="sec-hd"><div><h2>Fase de Grupos</h2><p>Completá el marcador de cada partido</p></div></div>
-      <div class="pts-chips">
-        <div class="pts-chip"><span class="v">8</span><span class="l">Marcador exacto</span></div>
-        <div class="pts-chip"><span class="v">6</span><span class="l">±1 gol c/equipo</span></div>
-        <div class="pts-chip"><span class="v">6</span><span class="l">Empate exacto</span></div>
-        <div class="pts-chip"><span class="v">5</span><span class="l">±2 goles c/equipo</span></div>
-        <div class="pts-chip"><span class="v">4</span><span class="l">Empate acertado</span></div>
-        <div class="pts-chip"><span class="v">3</span><span class="l">Resultado correcto</span></div>
-        <div class="pts-chip"><span class="v">0</span><span class="l">Incorrecto</span></div>
+      <div style="background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:1rem;margin-bottom:1.25rem;box-shadow:var(--sh);">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--g4);margin-bottom:.75rem;">Sistema de puntos</div>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 12px;background:#FFF9E6;border-radius:var(--r);border-left:3px solid #F5A623;">
+            <span style="font-size:13px;font-weight:600;white-space:nowrap;">⭐ Marcador exacto <span style="font-size:11px;color:var(--g4);font-weight:400;">— Ej: 2-1=2-1 ó 1-1=1-1 (vale para empates también)</span></span>
+            <span style="font-size:16px;font-weight:800;color:var(--acc);margin-left:12px;flex-shrink:0;">8 pts</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 12px;background:#EDF7EE;border-radius:var(--r);border-left:3px solid #00B86B;">
+            <span style="font-size:13px;font-weight:600;white-space:nowrap;">≈ Resultado + ±1 gol por equipo <span style="font-size:11px;color:var(--g4);font-weight:400;">— Ej: dijiste 3-1 y salió 2-1</span></span>
+            <span style="font-size:16px;font-weight:800;color:var(--acc);margin-left:12px;flex-shrink:0;">6 pts</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 12px;background:#EEF6FB;border-radius:var(--r);border-left:3px solid #0057D8;">
+            <span style="font-size:13px;font-weight:600;white-space:nowrap;">≈ Resultado + ±2 goles por equipo <span style="font-size:11px;color:var(--g4);font-weight:400;">— Ej: dijiste 3-1 y salió 1-0</span></span>
+            <span style="font-size:16px;font-weight:800;color:var(--acc);margin-left:12px;flex-shrink:0;">5 pts</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 12px;background:var(--g1);border-radius:var(--r);border-left:3px solid var(--g3);">
+            <span style="font-size:13px;font-weight:600;white-space:nowrap;">✓ Resultado correcto / Empate acertado <span style="font-size:11px;color:var(--g4);font-weight:400;">— Acertaste quién gana o que empataba, sin el marcador</span></span>
+            <span style="font-size:16px;font-weight:800;color:var(--acc);margin-left:12px;flex-shrink:0;">3 pts</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 12px;background:#FDE8E8;border-radius:var(--r);border-left:3px solid var(--err);">
+            <span style="font-size:13px;font-weight:600;white-space:nowrap;">✗ Resultado incorrecto</span>
+            <span style="font-size:16px;font-weight:800;color:var(--g3);margin-left:12px;flex-shrink:0;">0 pts</span>
+          </div>
+        </div>
       </div>
       <div class="prog">
         <div class="prog-lbl"><span>Progreso</span><span id="prog-txt">0 / 48</span></div>
@@ -421,10 +429,10 @@ input,button{font-family:inherit;}
       <div class="sec-hd"><div><h2>Eliminación Directa</h2><p>Las rondas se habilitan cuando el admin las abre</p></div></div>
       <div class="pts-chips">
         <div class="pts-chip"><span class="v">8</span><span class="l">Marcador exacto</span></div>
-        <div class="pts-chip"><span class="v">6</span><span class="l">±1 gol ganador</span></div>
-        <div class="pts-chip"><span class="v">5</span><span class="l">±2 goles ganador</span></div>
-        <div class="pts-chip"><span class="v">4</span><span class="l">Empate acertado</span></div>
-        <div class="pts-chip"><span class="v">3</span><span class="l">Resultado correcto</span></div>
+        <div class="pts-chip"><span class="v">6</span><span class="l">±1 gol c/equipo</span></div>
+        <div class="pts-chip"><span class="v">5</span><span class="l">±2 goles c/equipo</span></div>
+        <div class="pts-chip"><span class="v">3</span><span class="l">Resultado / Empate</span></div>
+        <div class="pts-chip"><span class="v">0</span><span class="l">Incorrecto</span></div>
       </div>
       <div id="eli-cont"></div>
     </div>
@@ -684,22 +692,23 @@ const FIXTURE = [
   ['2026-06-26','G','Egipto','Irán'],
   ['2026-06-26','H','Uruguay','España'],
   ['2026-06-26','H','Cabo Verde','Arabia Saudita'],
-  ['2026-06-27','I','Francia','Noruega'],
-  ['2026-06-27','I','Senegal','Irak'],
-  ['2026-06-27','J','Argentina','Jordania'],
+  ['2026-06-26','I','Noruega','Francia'],
+  ['2026-06-26','I','Senegal','Irak'],
   ['2026-06-27','J','Argelia','Austria'],
-  ['2026-06-27','K','Portugal','R.D. del Congo'],
+  ['2026-06-27','J','Jordania','Argentina'],
   ['2026-06-27','K','Colombia','Uzbekistán'],
-  ['2026-06-27','L','Inglaterra','Panamá'],
+  ['2026-06-27','K','Portugal','R.D. del Congo'],
+  ['2026-06-27','L','Panamá','Inglaterra'],
   ['2026-06-27','L','Croacia','Ghana'],
 ];
 
 const ROUNDS = [
-  {id:'oct',name:'Octavos de Final',n:8},
-  {id:'cua',name:'Cuartos de Final',n:4},
-  {id:'sem',name:'Semifinal',n:2},
-  {id:'ter',name:'Tercer Puesto',n:1},
-  {id:'fin',name:'Final',n:1}
+  {id:'die',name:'Dieciseisavos de Final',n:16,dates:'28 jun – 3 jul'},
+  {id:'oct',name:'Octavos de Final',n:8,dates:'4 – 7 jul'},
+  {id:'cua',name:'Cuartos de Final',n:4,dates:'9 – 11 jul'},
+  {id:'sem',name:'Semifinal',n:2,dates:'14 – 15 jul'},
+  {id:'ter',name:'Tercer Puesto',n:1,dates:'18 jul'},
+  {id:'fin',name:'Final',n:1,dates:'19 jul'}
 ];
 
 // ═══════════════════════════════════════════════
@@ -734,6 +743,7 @@ async function dbRead() {
     if (!DB.users)   DB.users   = {};
     if (!DB.results) DB.results = {};
     if (!DB.open)    DB.open    = {};
+    if (DB.open.die === undefined) DB.open.die = false;
     lsSet('db', DB);
     return true;
   } catch(e) {
@@ -798,12 +808,11 @@ function normalizeUser(user) {
   if (user.predsSaved === undefined) user.predsSaved = false;
   if (!user.elimSaved || typeof user.elimSaved !== 'object') user.elimSaved = {};
 
-  // Restaurar borrador local si existe y las predicciones no están bloqueadas
-  // Esto garantiza que si alguien escribió algo y cerró sin guardar, lo recupera
+  // SIEMPRE restaurar borrador local — el draft local tiene prioridad sobre Firebase
+  // porque puede tener valores más recientes que aún no se sincronizaron
   if (!user.predsSaved) {
     const draft = lsGet('draft_'+eKey(user.email));
-    if (draft && typeof draft === 'object') {
-      // Merge: el draft local tiene prioridad sobre lo que está en Firebase
+    if (draft && typeof draft === 'object' && Object.keys(draft).length > 0) {
       user.preds = Object.assign({}, user.preds || {}, draft);
     }
   }
@@ -1030,10 +1039,29 @@ function bootApp() {
 }
 
 async function loadAndRender() {
+  // Preservar preds locales antes de leer Firebase
+  const localPreds = meData && meData.preds ? Object.assign({}, meData.preds) : {};
+  const wasDirty = dirty;
+
   const ok = await dbRead();
   if (ok) {
     const key = eKey(me);
-    if (DB.users[key]) meData = DB.users[key];
+    if (DB.users[key]) {
+      meData = DB.users[key];
+      // Restaurar cambios locales no guardados por encima de lo que vino de Firebase
+      if (wasDirty && Object.keys(localPreds).length > 0) {
+        meData.preds = Object.assign({}, meData.preds || {}, localPreds);
+        DB.users[key] = meData;
+      }
+    }
+  }
+  // Restaurar draft de localStorage siempre (por si hubo cierre brusco)
+  if (meData && !meData.predsSaved) {
+    const draft = lsGet('draft_'+eKey(me));
+    if (draft && typeof draft === 'object') {
+      meData.preds = Object.assign({}, meData.preds || {}, draft);
+      DB.users[eKey(me)] = meData;
+    }
   }
   renderGroups(); renderElim(); renderRanking();
   if (isAdmin()) renderAdmin();
@@ -1051,7 +1079,7 @@ function showTab(id) {
     const b = document.getElementById('tbtn-'+t);
     if (b) b.classList.toggle('active', t===id);
   });
-  if (id==='rnk') loadAndRender();
+  if (id==='rnk') renderRanking(); // no recargar Firebase al cambiar tab
   if (id==='adm') renderAdmin();
 }
 
@@ -1060,12 +1088,10 @@ function flushInputsToMemory() {
   if (!meData) return;
   if (!meData.preds) meData.preds = {};
 
-  // Leer todos los inputs de score (.sin) visibles
-  document.querySelectorAll('.sin[data-key]').forEach(inp => {
+  // Leer TODOS los inputs score y team visibles (con o sin data-key)
+  document.querySelectorAll('.sin[data-key], .eteam[data-key]').forEach(inp => {
     const key = inp.dataset.key;
-    if (key && inp.value !== '') {
-      meData.preds[key] = inp.value;
-    }
+    if (key && inp.value !== '') meData.preds[key] = inp.value;
   });
 
   // Guardar en localStorage inmediatamente
@@ -1088,29 +1114,26 @@ function calcPts(ph,pa,rh,ra) {
   const rr = getRes(rh,ra);
   if (!pr||!rr) return {pts:0,tag:''};
 
-  // PASO 1: Si el resultado es incorrecto → 0 pts, fin.
+  // Resultado incorrecto
   if (pr !== rr) return {pts:0,tag:'miss'};
 
-  // PASO 2: Empate acertado — solo dos casos, sin ±1 ni ±2
-  if (rr === 'D') {
-    if (phn===rhn && pan===ran) return {pts:6,tag:'exact'}; // exacto: 4+2
-    return {pts:4,tag:'draw'};                               // solo empate
-  }
+  // Marcador exacto — vale tanto para victoria como para empate
+  if (phn===rhn && pan===ran) return {pts:8,tag:'exact'};
 
-  // PASO 3: Victoria acertada — calcular diferencia por equipo
-  // diff_L = diferencia en goles del equipo local
-  // diff_V = diferencia en goles del equipo visitante
+  // Empate acertado sin marcador = resultado correcto (3 pts)
+  if (rr === 'D') return {pts:3,tag:'res'};
+
+  // Victoria acertada — diferencia por equipo
   const diffL = Math.abs(phn - rhn);
   const diffV = Math.abs(pan - ran);
-
-  if (diffL===0 && diffV===0) return {pts:8,tag:'exact'}; // marcador exacto
-  if (diffL<=1  && diffV<=1)  return {pts:6,tag:'n1'};    // ±1 por equipo
-  if (diffL<=2  && diffV<=2)  return {pts:5,tag:'n2'};    // ±2 por equipo
-  return {pts:3,tag:'res'};                                 // solo resultado
+  if (diffL<=1 && diffV<=1) return {pts:6,tag:'n1'};
+  if (diffL<=2 && diffV<=2) return {pts:5,tag:'n2'};
+  return {pts:3,tag:'res'};
 }
 
-const TAG_LBL = {exact:'⭐ Exacto',n1:'≈±1 gol',n2:'≈±2 goles',res:'✓ Resultado',draw:'🤝 Empate',miss:'✗ 0pts'};
-const TAG_CLS = {exact:'t-exact',n1:'t-n1',n2:'t-n2',res:'t-res',draw:'t-draw',miss:'t-miss'};
+
+const TAG_LBL = {exact:'⭐ Exacto +8',n1:'≈±1 gol +6',n2:'≈±2 goles +5',res:'✓ Resultado +3',miss:'✗ 0pts'};
+const TAG_CLS = {exact:'t-exact',n1:'t-n1',n2:'t-n2',res:'t-res',miss:'t-miss'};
 
 // ═══════════════════════════════════════════════
 //  RENDER GRUPOS
@@ -1244,6 +1267,9 @@ function renderRanking() {
 // ═══════════════════════════════════════════════
 //  INPUT / SAVE
 // ═══════════════════════════════════════════════
+// Debounce timer para Firebase
+let _fbSaveTimer = null;
+
 function onInp(key, val) {
   // Bloquear si pasó la fecha límite (salvo el admin)
   if (isPastDeadline() && !isAdmin()) {
@@ -1257,9 +1283,18 @@ function onInp(key, val) {
   dirty = true;
   setSave(false);
   updateProg();
-  // Guardar INMEDIATAMENTE en localStorage — así nunca se pierde nada
+
+  // 1. Guardar en localStorage AHORA MISMO (instantáneo, sin red)
   lsSet('db', DB);
   lsSet('draft_'+eKey(me), meData.preds);
+
+  // 2. Guardar en Firebase 2 segundos después del último cambio (debounce)
+  clearTimeout(_fbSaveTimer);
+  _fbSaveTimer = setTimeout(async () => {
+    await dbWriteUser(me);
+    dirty = false;
+    setSave(true);
+  }, 2000);
 }
 
 async function savePreds() {
@@ -1439,7 +1474,7 @@ function renderAdminRounds() {
     const isOpen=DB.open[rnd.id];
     html+=`<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--g2);">
       <div><div style="font-size:13px;font-weight:600;">${rnd.name}</div>
-      <div style="font-size:10px;color:var(--g4);">${rnd.n} partido${rnd.n>1?'s':''}</div></div>
+      <div style="font-size:10px;color:var(--g4);">${rnd.n} partido${rnd.n>1?'s':''} ${rnd.dates?'· '+rnd.dates:''}</div></div>
       <button onclick="toggleRound('${rnd.id}')" style="padding:6px 13px;border-radius:var(--r);border:none;font-size:11px;font-weight:700;cursor:pointer;
         background:${isOpen?'rgba(229,57,53,.1)':'var(--acc-dim)'};color:${isOpen?'var(--err)':'var(--acc)'};">
         ${isOpen?'🔒 Cerrar':'🔓 Abrir'}</button></div>`;
