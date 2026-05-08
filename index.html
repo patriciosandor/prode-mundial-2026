@@ -256,6 +256,9 @@ input,button{font-family:inherit;}
             <label>Mail</label>
             <input type="email" id="inp-mail" placeholder="tu@mail.com" autocomplete="email"
               onkeydown="if(event.key==='Enter') checkMail()">
+            <div style="margin-top:6px;padding:8px 12px;background:#FFF3CD;border-left:3px solid #F5A623;border-radius:0 4px 4px 0;font-size:12px;font-weight:700;color:#856404;">
+              ⚠ Usá tu mail personal, NO el corporativo de Accenture
+            </div>
           </div>
           <button class="btn-acc" onclick="checkMail()">Continuar</button>
         </div>
@@ -793,6 +796,16 @@ function normalizeUser(user) {
   if (!user) return user;
   if (user.predsSaved === undefined) user.predsSaved = false;
   if (!user.elimSaved || typeof user.elimSaved !== 'object') user.elimSaved = {};
+
+  // Restaurar borrador local si existe y las predicciones no están bloqueadas
+  // Esto garantiza que si alguien escribió algo y cerró sin guardar, lo recupera
+  if (!user.predsSaved) {
+    const draft = lsGet('draft_'+eKey(user.email));
+    if (draft && typeof draft === 'object') {
+      // Merge: el draft local tiene prioridad sobre lo que está en Firebase
+      user.preds = Object.assign({}, user.preds || {}, draft);
+    }
+  }
   return user;
 }
 
@@ -1212,7 +1225,7 @@ function onInp(key, val) {
   // Bloquear si pasó la fecha límite (salvo el admin)
   if (isPastDeadline() && !isAdmin()) {
     toast('El plazo para cargar predicciones ya cerró (9 de junio)','err');
-    renderGroups(); // restaurar valores
+    renderGroups();
     return;
   }
   if (!meData.preds) meData.preds = {};
@@ -1221,6 +1234,9 @@ function onInp(key, val) {
   dirty = true;
   setSave(false);
   updateProg();
+  // Guardar INMEDIATAMENTE en localStorage — así nunca se pierde nada
+  lsSet('db', DB);
+  lsSet('draft_'+eKey(me), meData.preds);
 }
 
 async function savePreds() {
@@ -1244,6 +1260,8 @@ async function savePreds() {
   const ok = await dbWriteUser(me);
   dirty = false;
   setSave(true);
+  // Limpiar borrador local ya que las predicciones quedan bloqueadas en Firebase
+  try { localStorage.removeItem('p26_draft_'+eKey(me)); } catch(e) {}
   renderGroups();
   renderSaveBar();
   toast(ok ? '¡Predicciones guardadas! Ya no se pueden modificar ✓' : 'Guardado localmente ✓','ok');
@@ -1294,11 +1312,12 @@ window.addEventListener('beforeunload', () => { if(dirty&&me) { DB.users[eKey(me
 setInterval(async () => {
   if (dirty && me) {
     DB.users[eKey(me)] = meData;
+    lsSet('db', DB);
     await dbWriteUser(me);
     dirty = false;
     setSave(true);
   }
-}, 300000); // auto-save cada 5 minutos
+}, 30000); // auto-save cada 30 segundos
 
 // ═══════════════════════════════════════════════
 //  ADMIN
