@@ -392,29 +392,26 @@ input,button{font-family:inherit;}
     <!-- GRUPOS -->
     <div id="tab-grp" style="display:none;">
       <div class="sec-hd"><div><h2>Fase de Grupos</h2><p>Completá el marcador de cada partido</p></div></div>
-      <div style="background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:1rem;margin-bottom:1.25rem;box-shadow:var(--sh);">
-        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--g4);margin-bottom:.75rem;">Sistema de puntos</div>
-        <div style="display:flex;flex-direction:column;gap:5px;">
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 12px;background:#FFF9E6;border-radius:var(--r);border-left:3px solid #F5A623;">
-            <span style="font-size:13px;font-weight:600;white-space:nowrap;">⭐ Marcador exacto <span style="font-size:11px;color:var(--g4);font-weight:400;">— Ej: 2-1=2-1 ó 1-1=1-1 (vale para empates también)</span></span>
-            <span style="font-size:16px;font-weight:800;color:var(--acc);margin-left:12px;flex-shrink:0;">8 pts</span>
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 12px;background:#EDF7EE;border-radius:var(--r);border-left:3px solid #00B86B;">
-            <span style="font-size:13px;font-weight:600;white-space:nowrap;">≈ Resultado + ±1 gol por equipo <span style="font-size:11px;color:var(--g4);font-weight:400;">— Ej: dijiste 3-1 y salió 2-1</span></span>
-            <span style="font-size:16px;font-weight:800;color:var(--acc);margin-left:12px;flex-shrink:0;">6 pts</span>
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 12px;background:#EEF6FB;border-radius:var(--r);border-left:3px solid #0057D8;">
-            <span style="font-size:13px;font-weight:600;white-space:nowrap;">≈ Resultado + ±2 goles por equipo <span style="font-size:11px;color:var(--g4);font-weight:400;">— Ej: dijiste 3-1 y salió 1-0</span></span>
-            <span style="font-size:16px;font-weight:800;color:var(--acc);margin-left:12px;flex-shrink:0;">5 pts</span>
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 12px;background:var(--g1);border-radius:var(--r);border-left:3px solid var(--g3);">
-            <span style="font-size:13px;font-weight:600;white-space:nowrap;">✓ Resultado correcto / Empate acertado <span style="font-size:11px;color:var(--g4);font-weight:400;">— Acertaste quién gana o que empataba, sin el marcador</span></span>
-            <span style="font-size:16px;font-weight:800;color:var(--acc);margin-left:12px;flex-shrink:0;">3 pts</span>
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 12px;background:#FDE8E8;border-radius:var(--r);border-left:3px solid var(--err);">
-            <span style="font-size:13px;font-weight:600;white-space:nowrap;">✗ Resultado incorrecto</span>
-            <span style="font-size:16px;font-weight:800;color:var(--g3);margin-left:12px;flex-shrink:0;">0 pts</span>
-          </div>
+      <div style="display:flex;gap:8px;margin-bottom:1.25rem;">
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:10px 8px;">
+          <span style="font-size:20px;font-weight:800;color:var(--acc);">8</span>
+          <span style="font-size:12px;color:var(--g4);font-weight:500;">Marcador exacto</span>
+        </div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:10px 8px;">
+          <span style="font-size:20px;font-weight:800;color:var(--acc);">6</span>
+          <span style="font-size:12px;color:var(--g4);font-weight:500;">±1 gol c/equipo</span>
+        </div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:10px 8px;">
+          <span style="font-size:20px;font-weight:800;color:var(--acc);">5</span>
+          <span style="font-size:12px;color:var(--g4);font-weight:500;">±2 goles c/equipo</span>
+        </div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:10px 8px;">
+          <span style="font-size:20px;font-weight:800;color:var(--acc);">3</span>
+          <span style="font-size:12px;color:var(--g4);font-weight:500;">Resultado</span>
+        </div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:10px 8px;">
+          <span style="font-size:20px;font-weight:800;color:var(--g3);">0</span>
+          <span style="font-size:12px;color:var(--g4);font-weight:500;">Incorrecto</span>
         </div>
       </div>
       <div class="prog">
