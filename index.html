@@ -569,16 +569,19 @@ const FLAGS_EMOJI = {
   'México':'🇲🇽','EE.UU.':'🇺🇸','Canadá':'🇨🇦','Chequia':'🇨🇿',
   'Argentina':'🇦🇷','Suiza':'🇨🇭','Qatar':'🇶🇦','Bosnia y Herz.':'🇧🇦',
   'Brasil':'🇧🇷','Marruecos':'🇲🇦','Haití':'🇭🇹','Escocia':'🏴󠁧󠁢󠁳󠁣󠁴󠁿',
-  'EE.UU.':'🇺🇸','Paraguay':'🇵🇾','Australia':'🇦🇺','Kosovo':'🇽🇰',
+  'Paraguay':'🇵🇾','Australia':'🇦🇺','Kosovo':'🇽🇰',
   'Alemania':'🇩🇪','Curazao':'🇨🇼','Costa de Marfil':'🇨🇮','Ecuador':'🇪🇨',
   'Países Bajos':'🇳🇱','Japón':'🇯🇵','Noruega':'🇳🇴','Túnez':'🇹🇳',
-  'Bélgica':'🇧🇪','Croacia':'🇭🇷','Colombia':'🇨🇴','Uzbekistán':'🇺🇿',
+  'Bélgica':'🇧🇪','Egipto':'🇪🇬','Irán':'🇮🇷','Nueva Zelanda':'🇳🇿',
   'España':'🇪🇸','Cabo Verde':'🇨🇻','Arabia Saudita':'🇸🇦','Uruguay':'🇺🇾',
   'Francia':'🇫🇷','Senegal':'🇸🇳','Bolivia':'🇧🇴',
   'Argelia':'🇩🇿','Austria':'🇦🇹','Jordania':'🇯🇴',
   'Portugal':'🇵🇹','Turquía':'🇹🇷','R.D. del Congo':'🇨🇩','Irlanda':'🇮🇪',
   'Inglaterra':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Eslovenia':'🇸🇮','Camerún':'🇨🇲','Panamá':'🇵🇦',
-  'Sudáfrica':'🇿🇦','Corea del Sur':'🇰🇷'
+  'Sudáfrica':'🇿🇦','Corea del Sur':'🇰🇷','Croacia':'🇭🇷','Colombia':'🇨🇴',
+  'Uzbekistán':'🇺🇿','Eslovaquia':'🇸🇰','Ghana':'🇬🇭','Nigeria':'🇳🇬',
+  'Serbia':'🇷🇸','Polonia':'🇵🇱','Ucrania':'🇺🇦','Hungría':'🇭🇺','Chile':'🇨🇱',
+  'Perú':'🇵🇪','Venezuela':'🇻🇪','Costa Rica':'🇨🇷','Tanzania':'🇹🇿','Malí':'🇲🇱'
 };
 
 function FLAGS(team) {
@@ -1078,11 +1081,20 @@ const TAG_CLS = {exact:'t-exact',n1:'t-n1',n2:'t-n2',res:'t-res',draw:'t-draw',m
 function renderGroups() {
   const preds = (meData&&meData.preds) ? meData.preds : {};
   let html = '';
-  for (const [g,teams] of Object.entries(GROUPS)) {
-    const ms = [];
-    for (let i=0;i<teams.length;i++) for (let j=i+1;j<teams.length;j++) ms.push([teams[i],teams[j]]);
+  // Show groups in fixture date order — one card per group, matches ordered by date
+  const groupOrder = [...new Set(FIXTURE.map(f=>f[1]))]; // unique groups in date order
+  for (const g of groupOrder) {
+    const teams = GROUPS[g];
+    // Get matches for this group in fixture order
+    const fixtureMatches = FIXTURE.filter(f=>f[1]===g).map(f=>[f[2],f[3]]);
     html += `<div class="grp-card"><div class="grp-head"><span class="grp-letter">G${g}</span><span class="grp-sub">Grupo ${g}</span></div><div class="grp-body">`;
-    ms.forEach((m,mi) => {
+    // Find match index for key generation
+    const allMs = [];
+    for (let i=0;i<teams.length;i++) for (let j=i+1;j<teams.length;j++) allMs.push([teams[i],teams[j]]);
+    fixtureMatches.forEach((m) => {
+      // Find mi for this match
+      let mi = allMs.findIndex(([t1,t2])=>(t1===m[0]&&t2===m[1])||(t1===m[1]&&t2===m[0]));
+      if (mi < 0) return;
       const k  = `g${g}_${mi}`;
       const ph = preds[k+'_h']??'', pa = preds[k+'_a']??'';
       const rr = DB.results[k];
