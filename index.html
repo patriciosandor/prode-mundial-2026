@@ -116,6 +116,7 @@ input,button{font-family:inherit;}
 .t-n2{background:#D1ECF1;color:#0c5460;}
 .t-res{background:var(--acc-dim);color:var(--acc2);}
 .t-miss{background:#F8D7DA;color:#721c24;}
+.t-draw{background:#E8F4FD;color:#0c5460;}
 
 /* ELIM */
 .rnd-block{margin-bottom:1.75rem;}
@@ -313,19 +314,80 @@ input,button{font-family:inherit;}
   <div id="v-app" style="display:none;">
 
     <div class="tabs">
-      <button class="tab-btn active" id="tbtn-grp" onclick="showTab('grp')">Grupos</button>
+      <button class="tab-btn active" id="tbtn-inf" onclick="showTab('inf')">ℹ️ Cómo jugar</button>
+      <button class="tab-btn" id="tbtn-grp" onclick="showTab('grp')">Grupos</button>
       <button class="tab-btn" id="tbtn-eli" onclick="showTab('eli')">Eliminación</button>
       <button class="tab-btn" id="tbtn-rnk" onclick="showTab('rnk')">Ranking</button>
       <button class="tab-btn" id="tbtn-adm" onclick="showTab('adm')" style="display:none;">Admin ⚙</button>
     </div>
 
+    <!-- COMO JUGAR -->
+    <div id="tab-inf">
+      <div style="max-width:640px;margin:0 auto;">
+        <div style="background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:1.5rem;margin-bottom:1rem;box-shadow:var(--sh);">
+          <h2 style="font-size:18px;font-weight:700;margin-bottom:1rem;">⚽ Bienvenido al Prode Mundial 2026</h2>
+          <p style="font-size:14px;color:var(--g4);line-height:1.7;">Predecí los resultados de los partidos del Mundial 2026 y competí con tu equipo. Cuanto más preciso seas, más puntos acumulás.</p>
+        </div>
+
+        <div style="background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:1.5rem;margin-bottom:1rem;box-shadow:var(--sh);">
+          <h3 style="font-size:15px;font-weight:700;margin-bottom:1rem;color:var(--acc);">📊 Sistema de puntos</h3>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid #FFD700;">
+              <div><div style="font-weight:700;font-size:14px;">⭐ Marcador exacto</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Ej: dijiste 2-1 y salió 2-1</div></div>
+              <span style="font-size:22px;font-weight:800;color:var(--acc);">8 pts</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid #00B86B;">
+              <div><div style="font-weight:700;font-size:14px;">≈ Resultado + ±1 gol del ganador</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Ej: dijiste 3-1 y salió 2-1 o 4-1</div></div>
+              <span style="font-size:22px;font-weight:800;color:var(--acc);">6 pts</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid #0c5460;">
+              <div><div style="font-weight:700;font-size:14px;">🤝 Empate acertado + marcador exacto</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Ej: dijiste 1-1 y salió 1-1</div></div>
+              <span style="font-size:22px;font-weight:800;color:var(--acc);">6 pts</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid #0057D8;">
+              <div><div style="font-weight:700;font-size:14px;">≈ Resultado + ±2 goles del ganador</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Ej: dijiste 3-1 y salió 1-0 o 5-1</div></div>
+              <span style="font-size:22px;font-weight:800;color:var(--acc);">5 pts</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid #F5A623;">
+              <div><div style="font-weight:700;font-size:14px;">🤝 Empate acertado</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Acertaste que empataban pero no el marcador</div></div>
+              <span style="font-size:22px;font-weight:800;color:var(--acc);">4 pts</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid var(--g3);">
+              <div><div style="font-weight:700;font-size:14px;">✓ Resultado correcto</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">Acertaste quién gana pero no el marcador</div></div>
+              <span style="font-size:22px;font-weight:800;color:var(--acc);">3 pts</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--g1);border-radius:var(--r);border-left:4px solid var(--err);">
+              <div><div style="font-weight:700;font-size:14px;">✗ Resultado incorrecto</div><div style="font-size:12px;color:var(--g4);margin-top:2px;">No acertaste quién ganaba</div></div>
+              <span style="font-size:22px;font-weight:800;color:var(--g3);">0 pts</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--wht);border:1px solid var(--g2);border-radius:var(--r2);padding:1.5rem;margin-bottom:1rem;box-shadow:var(--sh);">
+          <h3 style="font-size:15px;font-weight:700;margin-bottom:1rem;color:var(--acc);">📋 Cómo participar</h3>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--g5);line-height:1.7;">
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:var(--acc);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;">1</span><span>Andá a la pestaña <strong>Grupos</strong> y completá el marcador que creés que va a salir en cada partido.</span></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:var(--acc);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;">2</span><span>Apretá <strong>Guardar predicciones</strong> antes de que empiece cada partido.</span></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:var(--acc);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;">3</span><span>Una vez que el admin cargue los resultados, tus puntos se calculan automáticamente.</span></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:var(--acc);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;">4</span><span>Seguí el <strong>Ranking</strong> para ver cómo vas contra el resto del equipo.</span></div>
+          </div>
+        </div>
+
+        <div style="background:var(--acc-dim);border:1px solid rgba(161,0,255,.2);border-radius:var(--r2);padding:1.25rem;box-shadow:var(--sh);">
+          <h3 style="font-size:14px;font-weight:700;margin-bottom:6px;color:var(--acc);">⚠️ Importante</h3>
+          <p style="font-size:13px;color:var(--g5);line-height:1.6;">Una vez que empieza un partido <strong>no podés cambiar tu predicción</strong>. Guardá tus picks antes de que arranque cada fecha.</p>
+        </div>
+      </div>
+    </div>
+
     <!-- GRUPOS -->
-    <div id="tab-grp">
+    <div id="tab-grp" style="display:none;">
       <div class="sec-hd"><div><h2>Fase de Grupos</h2><p>Completá el marcador de cada partido</p></div></div>
       <div class="pts-chips">
-        <div class="pts-chip"><span class="v">8</span><span class="l">Exacto</span></div>
-        <div class="pts-chip"><span class="v">6</span><span class="l">±1 gol</span></div>
-        <div class="pts-chip"><span class="v">5</span><span class="l">±2 goles</span></div>
+        <div class="pts-chip"><span class="v">8</span><span class="l">Marcador exacto</span></div>
+        <div class="pts-chip"><span class="v">6</span><span class="l">±1 gol ganador</span></div>
+        <div class="pts-chip"><span class="v">5</span><span class="l">±2 goles ganador</span></div>
+        <div class="pts-chip"><span class="v">4</span><span class="l">Empate acertado</span></div>
         <div class="pts-chip"><span class="v">3</span><span class="l">Resultado correcto</span></div>
         <div class="pts-chip"><span class="v">0</span><span class="l">Incorrecto</span></div>
       </div>
@@ -340,10 +402,11 @@ input,button{font-family:inherit;}
     <div id="tab-eli" style="display:none;">
       <div class="sec-hd"><div><h2>Eliminación Directa</h2><p>Las rondas se habilitan cuando el admin las abre</p></div></div>
       <div class="pts-chips">
-        <div class="pts-chip"><span class="v">8</span><span class="l">Exacto</span></div>
-        <div class="pts-chip"><span class="v">6</span><span class="l">±1 gol</span></div>
-        <div class="pts-chip"><span class="v">5</span><span class="l">±2 goles</span></div>
-        <div class="pts-chip"><span class="v">3</span><span class="l">Resultado</span></div>
+        <div class="pts-chip"><span class="v">8</span><span class="l">Marcador exacto</span></div>
+        <div class="pts-chip"><span class="v">6</span><span class="l">±1 gol ganador</span></div>
+        <div class="pts-chip"><span class="v">5</span><span class="l">±2 goles ganador</span></div>
+        <div class="pts-chip"><span class="v">4</span><span class="l">Empate acertado</span></div>
+        <div class="pts-chip"><span class="v">3</span><span class="l">Resultado correcto</span></div>
       </div>
       <div id="eli-cont"></div>
     </div>
@@ -355,11 +418,9 @@ input,button{font-family:inherit;}
         <button class="btn-sv" style="font-size:12px;padding:8px 16px;" onclick="loadAndRender()">↻ Actualizar</button>
       </div>
       <div class="rank-card">
-        <div class="rank-thead">
+        <div class="rank-thead" style="grid-template-columns:40px 1fr 80px;">
           <div>#</div><div>Jugador</div>
-          <div style="text-align:right;">Pts</div>
-          <div style="text-align:right;">Exactos</div>
-          <div style="text-align:right;">Result.</div>
+          <div style="text-align:right;">Puntos</div>
         </div>
         <div id="rnk-body"></div>
       </div>
@@ -482,18 +543,19 @@ const SUPER_ADMIN = 'patriciosandor@gmail.com';
 
 // Banderas como emojis Unicode — renderizadas via Twemoji (funciona en todos los navegadores)
 const FLAGS_EMOJI = {
-  'México':'🇲🇽','EE.UU.':'🇺🇸','Canadá':'🇨🇦','Honduras':'🇭🇳',
-  'Argentina':'🇦🇷','Chile':'🇨🇱','Perú':'🇵🇪','Bolivia':'🇧🇴',
-  'Brasil':'🇧🇷','Colombia':'🇨🇴','Venezuela':'🇻🇪','Ecuador':'🇪🇨',
-  'España':'🇪🇸','Portugal':'🇵🇹','Marruecos':'🇲🇦','Camerún':'🇨🇲',
-  'Francia':'🇫🇷','Bélgica':'🇧🇪','Países Bajos':'🇳🇱','Alemania':'🇩🇪',
-  'Inglaterra':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Italia':'🇮🇹','Croacia':'🇭🇷','Eslovaquia':'🇸🇰',
-  'Japón':'🇯🇵','Corea del Sur':'🇰🇷','Arabia Saudita':'🇸🇦','Australia':'🇦🇺',
-  'Senegal':'🇸🇳','Egipto':'🇪🇬','Nigeria':'🇳🇬','Ghana':'🇬🇭',
-  'Uruguay':'🇺🇾','Paraguay':'🇵🇾','Costa Rica':'🇨🇷','Panamá':'🇵🇦',
-  'Serbia':'🇷🇸','Polonia':'🇵🇱','Ucrania':'🇺🇦','Hungría':'🇭🇺',
-  'Turquía':'🇹🇷','Irán':'🇮🇷','Irak':'🇮🇶','Qatar':'🇶🇦',
-  'Costa de Marfil':'🇨🇮','Argelia':'🇩🇿','Malí':'🇲🇱','Tanzania':'🇹🇿'
+  'México':'🇲🇽','EE.UU.':'🇺🇸','Canadá':'🇨🇦','Chequia':'🇨🇿',
+  'Argentina':'🇦🇷','Suiza':'🇨🇭','Qatar':'🇶🇦','Bosnia y Herz.':'🇧🇦',
+  'Brasil':'🇧🇷','Marruecos':'🇲🇦','Haití':'🇭🇹','Escocia':'🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+  'EE.UU.':'🇺🇸','Paraguay':'🇵🇾','Australia':'🇦🇺','Kosovo':'🇽🇰',
+  'Alemania':'🇩🇪','Curazao':'🇨🇼','Costa de Marfil':'🇨🇮','Ecuador':'🇪🇨',
+  'Países Bajos':'🇳🇱','Japón':'🇯🇵','Noruega':'🇳🇴','Túnez':'🇹🇳',
+  'Bélgica':'🇧🇪','Croacia':'🇭🇷','Colombia':'🇨🇴','Uzbekistán':'🇺🇿',
+  'España':'🇪🇸','Cabo Verde':'🇨🇻','Arabia Saudita':'🇸🇦','Uruguay':'🇺🇾',
+  'Francia':'🇫🇷','Senegal':'🇸🇳','Bolivia':'🇧🇴',
+  'Argelia':'🇩🇿','Austria':'🇦🇹','Jordania':'🇯🇴',
+  'Portugal':'🇵🇹','Turquía':'🇹🇷','R.D. del Congo':'🇨🇩','Irlanda':'🇮🇪',
+  'Inglaterra':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Eslovenia':'🇸🇮','Camerún':'🇨🇲','Panamá':'🇵🇦',
+  'Sudáfrica':'🇿🇦','Corea del Sur':'🇰🇷'
 };
 
 function FLAGS(team) {
@@ -504,19 +566,20 @@ function FLAGS(team) {
   return `<img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/${cp}.svg" width="18" height="18" alt="${team}" style="display:inline-block;vertical-align:middle;margin-right:2px;flex-shrink:0;">`;
 }
 
+// Grupos OFICIALES del Mundial FIFA 2026 — Sorteo 5 dic 2025, Washington D.C.
 const GROUPS = {
-  A:['México','EE.UU.','Canadá','Honduras'],
-  B:['Argentina','Chile','Perú','Bolivia'],
-  C:['Brasil','Colombia','Venezuela','Ecuador'],
-  D:['España','Portugal','Marruecos','Camerún'],
-  E:['Francia','Bélgica','Países Bajos','Alemania'],
-  F:['Inglaterra','Italia','Croacia','Eslovaquia'],
-  G:['Japón','Corea del Sur','Arabia Saudita','Australia'],
-  H:['Senegal','Egipto','Nigeria','Ghana'],
-  I:['Uruguay','Paraguay','Costa Rica','Panamá'],
-  J:['Serbia','Polonia','Ucrania','Hungría'],
-  K:['Turquía','Irán','Irak','Qatar'],
-  L:['Costa de Marfil','Argelia','Malí','Tanzania']
+  A:['México','Sudáfrica','Corea del Sur','Chequia'],
+  B:['Canadá','Suiza','Qatar','Bosnia y Herz.'],
+  C:['Brasil','Marruecos','Haití','Escocia'],
+  D:['EE.UU.','Paraguay','Australia','Kosovo'],
+  E:['Alemania','Curazao','Costa de Marfil','Ecuador'],
+  F:['Países Bajos','Japón','Noruega','Túnez'],
+  G:['Bélgica','Croacia','Colombia','Uzbekistán'],
+  H:['España','Cabo Verde','Arabia Saudita','Uruguay'],
+  I:['Francia','Noruega','Senegal','Bolivia'],
+  J:['Argentina','Argelia','Austria','Jordania'],
+  K:['Portugal','Turquía','R.D. del Congo','Irlanda'],
+  L:['Inglaterra','Eslovenia','Camerún','Panamá']
 };
 
 const ROUNDS = [
@@ -792,6 +855,7 @@ function bootApp() {
   document.getElementById('adm-admins-box').style.display = isSuperAdmin() ? '' : 'none';
 
   document.getElementById('share-url').textContent = window.location.href;
+  showTab('inf');
   renderGroups();
   renderElim();
   renderRanking();
@@ -813,7 +877,7 @@ async function loadAndRender() {
 //  TABS
 // ═══════════════════════════════════════════════
 function showTab(id) {
-  ['grp','eli','rnk','adm'].forEach(t => {
+  ['inf','grp','eli','rnk','adm'].forEach(t => {
     document.getElementById('tab-'+t).style.display = t===id ? '' : 'none';
     const b = document.getElementById('tbtn-'+t);
     if (b) b.classList.toggle('active', t===id);
@@ -831,18 +895,44 @@ function calcPts(ph,pa,rh,ra) {
   const x = v => (v==null||v==='') ? null : parseInt(v);
   const [phn,pan,rhn,ran] = [x(ph),x(pa),x(rh),x(ra)];
   if ([phn,pan,rhn,ran].some(v => v==null||isNaN(v))) return {pts:0,tag:''};
-  if (phn===rhn && pan===ran) return {pts:8,tag:'exact'};
+
   const pr=getRes(ph,pa), rr=getRes(rh,ra);
   if (!pr||!rr) return {pts:0,tag:''};
-  const dh=Math.abs(phn-rhn), da=Math.abs(pan-ran);
-  if (dh<=1&&da<=1) return {pts:6,tag:'n1'};
-  if (dh<=2&&da<=2) return {pts:5,tag:'n2'};
-  if (pr===rr) return {pts:3,tag:'res'};
-  return {pts:0,tag:'miss'};
+
+  // Resultado incorrecto
+  if (pr!==rr) return {pts:0,tag:'miss'};
+
+  // Empate acertado
+  if (rr==='D') {
+    // Marcador exacto en empate: 4+2=6
+    if (phn===rhn && pan===ran) return {pts:6,tag:'exact'};
+    // Empate acertado sin marcador exacto: 4
+    return {pts:4,tag:'draw'};
+  }
+
+  // Ganador acertado — comparar goles del ganador
+  // Determinar cuántos goles hizo el ganador en prediccion y en resultado
+  const predWin = phn>pan ? phn : pan;
+  const predLos = phn>pan ? pan : phn;
+  const realWin = rhn>ran ? rhn : ran;
+  const realLos = rhn>ran ? ran : rhn;
+
+  // Marcador exacto
+  if (phn===rhn && pan===ran) return {pts:8,tag:'exact'};
+
+  // Diferencia de goles del ganador respecto a lo predicho
+  const diffWin = Math.abs(predWin - realWin);
+  const diffLos = Math.abs(predLos - realLos);
+
+  if (diffWin<=1 && diffLos<=1) return {pts:6,tag:'n1'};
+  if (diffWin<=2 && diffLos<=2) return {pts:5,tag:'n2'};
+
+  // Solo acertó el resultado
+  return {pts:3,tag:'res'};
 }
 
-const TAG_LBL = {exact:'⭐+8',n1:'≈±1 +6',n2:'≈±2 +5',res:'✓+3',miss:'✗0'};
-const TAG_CLS = {exact:'t-exact',n1:'t-n1',n2:'t-n2',res:'t-res',miss:'t-miss'};
+const TAG_LBL = {exact:'⭐ Exacto',n1:'≈±1 gol',n2:'≈±2 goles',res:'✓ Resultado',draw:'🤝 Empate',miss:'✗ 0pts'};
+const TAG_CLS = {exact:'t-exact',n1:'t-n1',n2:'t-n2',res:'t-res',draw:'t-draw',miss:'t-miss'};
 
 // ═══════════════════════════════════════════════
 //  RENDER GRUPOS
@@ -937,18 +1027,23 @@ function renderRanking() {
   const list = Object.values(DB.users).sort((a,b)=>(b.pts||0)-(a.pts||0));
   const body = document.getElementById('rnk-body');
   if (!list.length) { body.innerHTML='<div style="padding:2rem;text-align:center;color:var(--g3);font-size:13px;">Aún no hay participantes</div>'; return; }
+  const rowStyle = [
+    'grid-template-columns:40px 1fr 80px;background:linear-gradient(90deg,rgba(255,215,0,0.08),transparent);border-left:3px solid #FFD700;',
+    'grid-template-columns:40px 1fr 80px;background:linear-gradient(90deg,rgba(192,192,192,0.08),transparent);border-left:3px solid #C0C0C0;',
+    'grid-template-columns:40px 1fr 80px;background:linear-gradient(90deg,rgba(205,127,50,0.08),transparent);border-left:3px solid #CD7F32;',
+  ];
   body.innerHTML = list.map((u,i) => {
     const pc=i===0?'r1':i===1?'r2':i===2?'r3':'rn';
     const isMe=u.email===me;
-    return `<div class="rank-row${isMe?' me':''}">
+    const extraStyle = i<3 ? rowStyle[i] : 'grid-template-columns:40px 1fr 80px;';
+    const medalEmoji = i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+    return `<div class="rank-row${isMe?' me':''}" style="${extraStyle}">
       <div><span class="rpos ${pc}">${i+1}</span></div>
       <div>
-        <div class="rname">${u.name||u.email}${u.isAdmin?'<span class="admin-tag">Admin</span>':''}${isMe?' <span style="font-size:10px;color:var(--acc);font-weight:700;"> (vos)</span>':''}</div>
+        <div class="rname">${medalEmoji} ${u.name||u.email}${u.isAdmin?'<span class="admin-tag">Admin</span>':''}${isMe?' <span style="font-size:10px;color:var(--acc);font-weight:700;"> (vos)</span>':''}</div>
         <div class="remail">${u.email}</div>
       </div>
-      <div class="rpts">${u.pts||0}</div>
-      <div class="rgold">${u.exactos||0}</div>
-      <div class="rsub">${u.resultados||0}</div>
+      <div class="rpts" style="text-align:right;font-size:22px;font-weight:700;color:var(--acc);">${u.pts||0}</div>
     </div>`;
   }).join('');
 }
@@ -1137,19 +1232,19 @@ function onRes(k,side,val) {
 // ═══════════════════════════════════════════════
 const TEAM_NAME_MAP = {
   'Mexico':'México','United States':'EE.UU.','USA':'EE.UU.','Canada':'Canadá',
-  'Argentina':'Argentina','Chile':'Chile','Peru':'Perú','Bolivia':'Bolivia',
-  'Brazil':'Brasil','Colombia':'Colombia','Venezuela':'Venezuela','Ecuador':'Ecuador',
-  'Spain':'España','Portugal':'Portugal','Morocco':'Marruecos','Cameroon':'Camerún',
-  'France':'Francia','Belgium':'Bélgica','Netherlands':'Países Bajos','Germany':'Alemania',
-  'England':'Inglaterra','Italy':'Italia','Croatia':'Croacia','Slovakia':'Eslovaquia',
-  'Japan':'Japón','Korea Republic':'Corea del Sur','South Korea':'Corea del Sur',
-  'Saudi Arabia':'Arabia Saudita','Australia':'Australia',
-  'Senegal':'Senegal','Egypt':'Egipto','Nigeria':'Nigeria','Ghana':'Ghana',
-  'Uruguay':'Uruguay','Paraguay':'Paraguay','Costa Rica':'Costa Rica','Panama':'Panamá',
-  'Serbia':'Serbia','Poland':'Polonia','Ukraine':'Ucrania','Hungary':'Hungría',
-  'Turkey':'Turquía','Iran':'Irán','Iraq':'Irak','Qatar':'Qatar',
-  "Côte d'Ivoire":'Costa de Marfil',"Ivory Coast":'Costa de Marfil',
-  'Algeria':'Argelia','Mali':'Malí','Tanzania':'Tanzania','Honduras':'Honduras'
+  'Czechia':'Chequia','Czech Republic':'Chequia',
+  'Switzerland':'Suiza','Qatar':'Qatar','Bosnia and Herzegovina':'Bosnia y Herz.',
+  'Brazil':'Brasil','Morocco':'Marruecos','Haiti':'Haití','Scotland':'Escocia',
+  'Paraguay':'Paraguay','Australia':'Australia','Kosovo':'Kosovo',
+  'Germany':'Alemania','Curaçao':'Curazao','Ivory Coast':'Costa de Marfil',"Côte d'Ivoire":'Costa de Marfil','Ecuador':'Ecuador',
+  'Netherlands':'Países Bajos','Japan':'Japón','Norway':'Noruega','Tunisia':'Túnez',
+  'Belgium':'Bélgica','Croatia':'Croacia','Colombia':'Colombia','Uzbekistan':'Uzbekistán',
+  'Spain':'España','Cape Verde':'Cabo Verde','Saudi Arabia':'Arabia Saudita','Uruguay':'Uruguay',
+  'France':'Francia','Senegal':'Senegal','Bolivia':'Bolivia',
+  'Argentina':'Argentina','Algeria':'Argelia','Austria':'Austria','Jordan':'Jordania',
+  'Portugal':'Portugal','Turkey':'Turquía','DR Congo':'R.D. del Congo','Republic of Ireland':'Irlanda','Ireland':'Irlanda',
+  'England':'Inglaterra','Slovenia':'Eslovenia','Cameroon':'Camerún','Panama':'Panamá',
+  'South Africa':'Sudáfrica','Korea Republic':'Corea del Sur','South Korea':'Corea del Sur'
 };
 
 function findMatchKey(home, away) {
